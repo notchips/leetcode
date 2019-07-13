@@ -6,17 +6,17 @@
 /*
     0 1 2 3 4 5 6 7 8 9 10 11
 	_ m i s s i s s i p  p i
-0 _ t f f f f f f f f f  f f
-1 m f t f f f f f f f f  f f
-2 i f f t f f f f f f f  f f
-3 s f f f t f f f f f f  f f
-4 * f f t t t f f f f f  f f
-5 i f f f f f t f f f f  f f
-6 s f f f f f f t f f f  f f
-7 * f f f f f t t t f f  f f
-8 p f f f f f f f f f f  f f
-9 * f f f f f t t t f f  f f
-10. f f f f f f f f t f  f f
+  0 _ t f f f f f f f f f  f f
+  1 m f t f f f f f f f f  f f
+  2 i f f t f f f f f f f  f f
+  3 s f f f t f f f f f f  f f
+  4 * f f t t t f f f f f  f f
+  5 i f f f f f t f f f f  f f
+  6 s f f f f f f t f f f  f f
+  7 * f f f f f t t t f f  f f
+  8 p f f f f f f f f f f  f f
+  9 * f f f f f t t t f f  f f
+  10. f f f f f f f f t f  f f
 
 */
 func isMatch(s string, p string) bool {
