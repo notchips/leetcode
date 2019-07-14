@@ -7,21 +7,18 @@
 	sort.Ints(nums)
 	minDiff := math.MaxInt32
 	for i := 0; i < len(nums)-2; i++ {
-		for j := i + 1; j < len(nums)-1; j++ {
-			lo, hi := j+1, len(nums)-1
-			for lo <= hi {
-				mid := (lo + hi) / 2
-				sum := nums[i] + nums[j] + nums[mid]
-				if abs(sum - target) < abs(minDiff) {
-					minDiff = sum - target
-				}
-				if sum == target {
-					return target
-				} else if sum < target {
-					lo = mid + 1
-				} else {
-					hi = mid - 1
-				}
+		lo, hi := i+1, len(nums)-1
+		for lo < hi {
+			diff := nums[i] + nums[lo] + nums[hi] - target
+			if diff == 0 {
+				return target
+			} else if diff > 0 {
+				hi--
+			} else {
+				lo++
+			}
+			if abs(diff) < abs(minDiff) {
+				minDiff = diff
 			}
 		}
 	}
