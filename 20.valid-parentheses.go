@@ -16,4 +16,3 @@
 	}
 	return len(stack) == 0
 }
-

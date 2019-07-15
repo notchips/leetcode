@@ -11,11 +11,8 @@
  * }
  */
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
-	var (
-		tail = 0
-		head *ListNode = l1 // 利用l1拼接出结果
-		pre *ListNode = nil // 记录l1的前置节点
-	)
+	tail := 0
+	var head, pre *ListNode = l1, nil
 	for ; l1 != nil && l2 != nil; pre, l1, l2 = l1, l1.Next, l2.Next{
 		sum := l1.Val + l2.Val + tail
 		l1.Val, tail = sum % 10, sum / 10
@@ -39,4 +36,3 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 	}
     return head
 }
-

@@ -4,8 +4,8 @@
  * [10] Regular Expression Matching
  */
 /*
-    0 1 2 3 4 5 6 7 8 9 10 11
-	_ m i s s i s s i p  p i
+      0 1 2 3 4 5 6 7 8 9 10 11
+	  _ m i s s i s s i p  p i
   0 _ t f f f f f f f f f  f f
   1 m f t f f f f f f f f  f f
   2 i f f t f f f f f f f  f f
@@ -29,7 +29,6 @@ func isMatch(s string, p string) bool {
 	}
 
 	dp[0][0] = true
-
 	for i := 1; i <= pl; i++ {
 		if p[i] == '*' {
 			dp[i][0] = dp[i-2][0]
@@ -38,13 +37,13 @@ func isMatch(s string, p string) bool {
 
 	for i := 1; i <= pl; i++ {
 		for j := 1; j <= sl; j++ {
-			if p[i] == s[j] || p[i] == '.' { // match single
+			if p[i] == s[j] || p[i] == '.' { // 匹配到单个字符
 				dp[i][j] = dp[i-1][j-1]
 			}
 			if p[i] == '*' {
-				if p[i-1] != s[j] && p[i-1] != '.' { // not match
+				if p[i-1] != s[j] && p[i-1] != '.' { // 匹配失败
 					dp[i][j] = dp[i-2][j]
-				} else { // match empty || match single || match more
+				} else {    // 匹配空字符  || 匹配单个字符|| 匹配多个字符
 					dp[i][j] = dp[i-2][j] || dp[i-1][j] || dp[i][j-1]
 				}
 			}

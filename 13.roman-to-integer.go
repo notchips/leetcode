@@ -41,4 +41,3 @@ func singleToInt(c byte) int {
 		return 0
 	}
 }
-

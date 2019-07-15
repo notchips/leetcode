@@ -22,4 +22,3 @@
 	ptrs[len(ptrs)-n-1].Next = ptrs[len(ptrs)-n].Next
 	return ptrs[0]
 }
-

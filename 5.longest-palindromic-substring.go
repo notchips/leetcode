@@ -9,7 +9,7 @@
 	 }
 	 var start, maxLen int
 	 for i := 0; i < len(s)-1; i++ {
-		 s1, l1 := extend(i, i, s) // 奇数长度扩展
+		 s1, l1 := extend(i, i, s)  // 奇数长度扩展
 		 if l1 > maxLen {
 			 start, maxLen = s1, l1
 		 }
