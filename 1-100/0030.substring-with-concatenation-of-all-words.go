@@ -3,7 +3,7 @@
  *
  * [30] Substring with Concatenation of All Words
  */
- func findSubstring(s string, words []string) []int {
+func findSubstring(s string, words []string) []int {
 	ret := make([]int, 0, 10)
 	if len(s) == 0 || len(words) == 0 {
 		return ret

@@ -3,7 +3,7 @@
  *
  * [31] Next Permutation
  */
- func nextPermutation(nums []int) {
+func nextPermutation(nums []int) {
 	n := len(nums)
 	for i := n - 2; i >= 0; i-- {
 		for j := n - 1; j > i; j-- {

@@ -3,7 +3,7 @@
  *
  * [18] 4Sum
  */
- func fourSum(nums []int, target int) [][]int {
+func fourSum(nums []int, target int) [][]int {
 	sort.Ints(nums)
 	ret := make([][]int, 0, 10)
 	for i := 0; i < len(nums)-3; i++ {

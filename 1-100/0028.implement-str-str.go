@@ -4,7 +4,7 @@
  * [28] Implement strStr()
  */
  // KMP
- func strStr(haystack string, needle string) int {
+func strStr(haystack string, needle string) int {
 	i, j := 0, 0
 	next := getNext(needle)
 	for i < len(haystack) && j < len(needle) {

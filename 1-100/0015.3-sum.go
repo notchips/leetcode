@@ -3,7 +3,7 @@
  *
  * [15] 3Sum
  */
- func threeSum(nums []int) [][]int {
+func threeSum(nums []int) [][]int {
 	sort.Ints(nums)
 	ret := make([][]int, 0, 20)
 	for i := 0; i < len(nums)-2; i++ {

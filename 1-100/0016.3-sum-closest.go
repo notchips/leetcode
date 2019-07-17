@@ -3,7 +3,7 @@
  *
  * [16] 3Sum Closest
  */
- func threeSumClosest(nums []int, target int) int {
+func threeSumClosest(nums []int, target int) int {
 	sort.Ints(nums)
 	minDiff := math.MaxInt32
 	for i := 0; i < len(nums)-2; i++ {

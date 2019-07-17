@@ -8,7 +8,7 @@
  //       |  |  |  |  |
  // 数组：   [1 ,  3]
  // 切点1将数组切分为[1] 和 [1, 3]
- func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
+func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 	if len(nums1) > len(nums2) {      // 短数组更快二分到结果
 		nums1, nums2 = nums2, nums1
 	}

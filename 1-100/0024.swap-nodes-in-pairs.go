@@ -10,7 +10,7 @@
  *     Next *ListNode
  * }
  */
- func swapPairs(head *ListNode) *ListNode {
+func swapPairs(head *ListNode) *ListNode {
 	headNode := &ListNode{0, head}
 	pre := headNode
 	for head != nil {

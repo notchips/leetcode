@@ -3,7 +3,7 @@
  *
  * [20] Valid Parentheses
  */
- func isValid(s string) bool {
+func isValid(s string) bool {
 	stack := make([]byte, 0, len(s))
 	for i := 0; i < len(s); i++ {
 		if len(stack) > 0 && ((stack[len(stack)-1] == '[' && s[i] == ']') ||

@@ -3,7 +3,7 @@
  *
  * [5] Longest Palindromic Substring
  */
- func longestPalindrome(s string) string {
+func longestPalindrome(s string) string {
 	 if len(s) < 2 {
 		 return s
 	 }

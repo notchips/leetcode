@@ -3,7 +3,7 @@
  *
  * [29] Divide Two Integers
  */
- func divide(dividend int, divisor int) int {
+func divide(dividend int, divisor int) int {
 	if dividend == math.MinInt32 && divisor == -1 {
 		return math.MaxInt32
 	}

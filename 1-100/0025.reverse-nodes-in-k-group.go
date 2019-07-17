@@ -10,7 +10,7 @@
  *     Next *ListNode
  * }
  */
- func reverseKGroup(head *ListNode, k int) *ListNode {
+func reverseKGroup(head *ListNode, k int) *ListNode {
 	headNode := &ListNode{0, head}
 	pre := headNode
 	nodes := make([]*ListNode, 0, k)

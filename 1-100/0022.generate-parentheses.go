@@ -3,7 +3,7 @@
  *
  * [22] Generate Parentheses
  */
- func generateParenthesis(n int) []string {
+func generateParenthesis(n int) []string {
 	ret := make([]string, 0, 20)
 	helper(&ret, "", 0, 0, 2*n)
 	return ret

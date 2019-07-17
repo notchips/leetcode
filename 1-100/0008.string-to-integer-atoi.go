@@ -3,7 +3,7 @@
  *
  * [8] String to Integer (atoi)
  */
- func myAtoi(str string) int {
+func myAtoi(str string) int {
 	str = strings.TrimSpace(str)
 	tempArr := make([]byte, 0, len(str))
 	for i := 0; i < len(str); i++ {

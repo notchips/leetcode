@@ -10,7 +10,7 @@
  *     Next *ListNode
  * }
  */
- func removeNthFromEnd(head *ListNode, n int) *ListNode {
+func removeNthFromEnd(head *ListNode, n int) *ListNode {
 	ptrs := make([]*ListNode, 0, 10)
 	for ; head != nil; head = head.Next {
 		ptrs = append(ptrs, head)

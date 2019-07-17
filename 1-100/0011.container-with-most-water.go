@@ -3,7 +3,7 @@
  *
  * [11] Container With Most Water
  */
- func maxArea(height []int) int {
+func maxArea(height []int) int {
 	maxArea := 0
 	for i, j := 0, len(height)-1; i < j; {
 		area := min(height[i], height[j]) * (j - i)

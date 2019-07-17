@@ -3,7 +3,7 @@
  *
  * [13] Roman to Integer
  */
- func romanToInt(s string) int {
+func romanToInt(s string) int {
 	ret := 0
 	for i := 0; i < len(s); i++ {
 		ret += singleToInt(s[i])
