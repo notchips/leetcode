@@ -9,15 +9,15 @@ func nextPermutation(nums []int) {
 		for j := n - 1; j > i; j-- {
 			if nums[i] < nums[j] {
 				nums[i], nums[j] = nums[j], nums[i]
-				asc(nums[i+1:])
+				reverse(nums[i+1:])
 				return
 			}
 		}
 	}
-	asc(nums)
+	reverse(nums)
 }
 
-func asc(nums []int) {
+func reverse(nums []int) {
 	for i, j := 0, len(nums)-1; i < j; i, j = i+1, j-1 {
 		nums[i], nums[j] = nums[j], nums[i]
 	}
