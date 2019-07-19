@@ -3,18 +3,23 @@
  *
  * [45] Jump Game II
  */
- func jump(nums []int) int {
+func jump(nums []int) int {
 	n := len(nums)
-	dp := make([]int, n)
-	dp[n-1] = 0
-	for i := n - 2; i >= 0; i-- {
-		min := math.MaxInt32
-		for j := i + 1; j < n && j <= i+nums[i]; j++ {
-			if dp[j] < min {
-				min = dp[j]
+	cnt := 0
+	for i := 0; i < n-1; {
+		if i+nums[i] >= n-1 {
+			cnt++
+			break
+		} else {
+			max := i + 1
+			for j := i + 2; j < n && j <= i+nums[i]; j++ {
+				if nums[j]+j >= nums[max]+max {
+					max = j
+				}
 			}
+			cnt++
+			i = max
 		}
-		dp[i] = 1 + min
 	}
-	return dp[0]
+	return cnt
 }
