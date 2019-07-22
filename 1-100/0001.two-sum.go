@@ -3,16 +3,22 @@
  *
  * [1] Two Sum
  */
+ 
+/*
+  时间复杂度：O(nlogn)；空间复杂度：O(n)
+  √ 29/29 cases passed (4 ms)
+  √ Your runtime beats 96.72 % of golang submissions
+  √ Your memory usage beats 41.93 % of golang submissions (3.7 MB)
+ */
 func twoSum(nums []int, target int) []int {
-	ret := make([]int, 2)
-	v2i := make(map[int]int, len(nums)) // value to index
-	for i := 0; i < len(nums); i++{
-		dif := target - nums[i]
-		if _, ok := v2i[dif]; ok{
-			ret[0], ret[1] = v2i[dif], i
+	ans := make([]int, 2)
+	v2i := make(map[int]int) // value to index
+	for i, v := range nums {
+		if j, ok := v2i[target-v]; ok {
+			ans[0], ans[1] = j, i
 			break
 		}
-		v2i[nums[i]] = i
+		v2i[v] = i
 	}
-	return ret
+	return ans
 }
