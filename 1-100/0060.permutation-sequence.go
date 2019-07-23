@@ -6,11 +6,7 @@
 func getPermutation(n int, k int) string {
 	ans := make([]byte, n)
 	vis := make([]bool, n+1)
-	f := make([]int, n+1)
-	f[1] = 1
-	for i := 2; i <= n; i++ {
-		f[i] = f[i-1] * i
-	}
+	f := getFactorial(n)
 	for i := 0; i < n-1; i++ {
 		ans[i] = getNum(vis, n, (k-1)/f[n-1-i]+1)
 		k = (k-1)%f[n-1-i] + 1
@@ -32,4 +28,14 @@ func getNum(vis []bool, n, m int) byte {
 	}
 	vis[i] = true
 	return byte(i + '0')
+}
+
+// 获取1到n的阶乘
+func getFactorial(n int) []int {
+	f := make([]int, n+1)
+	f[1] = 1
+	for i := 2; i <= n; i++ {
+		f[i] = f[i-1] * i
+	}
+	return f
 }
