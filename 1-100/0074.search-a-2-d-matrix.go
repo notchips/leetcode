@@ -19,7 +19,7 @@ func searchMatrix(matrix [][]int, target int) bool {
 	}
 	row := top
 
-	// 在改行进行二分查找
+	// 在该行进行二分查找
 	left, right := 0, len(matrix[0])-1
 	for left <= right {
 		mid := left + (right-left)/2
