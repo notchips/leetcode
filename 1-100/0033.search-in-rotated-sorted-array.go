@@ -4,8 +4,7 @@
  * [33] Search in Rotated Sorted Array
  */
 func search(nums []int, target int) int {
-	n := len(nums)
-	for left, right := 0, n-1; left <= right; {
+	for left, right := 0, len(nums)-1; left <= right; {
 		mid := (left + right) / 2
 		if nums[left] <= nums[mid] { // 左半有序
 			if target >= nums[left] && target <= nums[mid] {
