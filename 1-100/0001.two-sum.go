@@ -6,13 +6,13 @@
 func twoSum(nums []int, target int) []int {
 	ans := make([]int, 2)
 	hash := make(map[int]int) // value to index
-	for i := 0; i < len(nums); i++ {
-		toFind := target - nums[i]
+	for i, num := range nums {
+		toFind := target - num
 		if _, ok := hash[toFind]; ok {
 			ans[0], ans[1] = hash[toFind], i
 			break
 		}
-		hash[nums[i]] = i
+		hash[num] = i
 	}
 	return ans
 }
