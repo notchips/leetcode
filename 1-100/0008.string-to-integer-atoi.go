@@ -3,27 +3,38 @@
  *
  * [8] String to Integer (atoi)
  */
-func myAtoi(str string) int {
+ func myAtoi(str string) int {
 	str = strings.TrimSpace(str)
-	tempArr := make([]byte, 0, len(str))
-	for i := 0; i < len(str); i++ {
-		if i == 0 && (str[i] == '-' || str[i] == '+') {
-			tempArr = append(tempArr, str[i])
-		} else if str[i] < '0' || str[i] > '9' {
-			break
-		} else {
-			tempArr = append(tempArr, str[i])
+	ans := 0
+	for i, neg := 0, false; i < len(str); i++ {
+		// 检查正负号
+		if i == 0 && (str[0] == '-' || str[0] == '+') {
+			if str[0] == '-' {
+				neg = true
+			}
+			continue
 		}
-	}
-	if len(tempArr) == 0 || (len(tempArr) == 1 && (tempArr[0] == '-' || tempArr[0] == '+')) {
-		return 0
-	}
-	ret, err := strconv.ParseInt(string(tempArr), 10, 32)
-	if err != nil {
-		if tempArr[0] == '-' {
+
+		// 遇到非数字直接返回结果
+		if str[i] < '0' || str[i] > '9' {
+			return ans
+		}
+
+		ans = ans*10 + charToInt(str[i], neg)
+
+		// 超过int32直接返回int32边界值
+		if ans > math.MaxInt32 {
+			return math.MaxInt32
+		} else if ans < math.MinInt32 {
 			return math.MinInt32
 		}
-		return math.MaxInt32
 	}
-	return int(ret)
+	return ans
+}
+
+func charToInt(c byte, neg bool) int {
+	if neg {
+		return -1 * int(c-'0')
+	}
+	return int(c - '0')
 }
