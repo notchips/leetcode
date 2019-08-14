@@ -4,11 +4,17 @@
  * [9] Palindrome Number
  */
 func isPalindrome(x int) bool {
-	s := fmt.Sprintf("%d", x)
-	for i, j := 0, len(s)-1; i<j; i, j = i+1, j-1{
-		if s[i] != s[j] {
-			return false
-		}
-	 }
-	 return true
+	if x < 0 {
+		return false
+	}
+	return x == reverse(x)
+}
+
+func reverse(x int) int {
+	y := 0
+	for x > 0 {
+		y = y*10 + x%10
+		x /= 10
+	}
+	return y
 }
