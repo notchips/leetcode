@@ -5,24 +5,24 @@
  */
 func threeSumClosest(nums []int, target int) int {
 	sort.Ints(nums)
-	minDiff := math.MaxInt32
-	for i := 0; i < len(nums)-2; i++ {
-		lo, hi := i+1, len(nums)-1
-		for lo < hi {
-			diff := nums[i] + nums[lo] + nums[hi] - target
-			if diff == 0 {
-				return target
-			} else if diff > 0 {
-				hi--
-			} else {
-				lo++
+	ans := nums[0] + nums[1] + nums[2]
+	n := len(nums)
+	for i := 0; i < n-2; i++ {
+		for lo, hi := i+1, n-1; lo < hi; {
+			sum := nums[i] + nums[lo] + nums[hi]
+			if abs(sum-target) < abs(ans-target) {
+				ans = sum
 			}
-			if abs(diff) < abs(minDiff) {
-				minDiff = diff
+			if sum == target {
+				break
+			} else if sum < target {
+				lo++
+			} else {
+				hi--
 			}
 		}
 	}
-	return target + minDiff
+	return ans
 }
 
 func abs(a int) int {

@@ -10,15 +10,15 @@
  *     Next *ListNode
  * }
  */
-func removeNthFromEnd(head *ListNode, n int) *ListNode {
-	ptrs := make([]*ListNode, 0, 10)
-	for ; head != nil; head = head.Next {
-		ptrs = append(ptrs, head)
+ func removeNthFromEnd(head *ListNode, n int) *ListNode {
+	headNode := &ListNode{Next: head}
+	nodes := make([]*ListNode, 0, 10)
+	tempNode := headNode
+	for tempNode != nil {
+		nodes = append(nodes, tempNode)
+		tempNode = tempNode.Next
 	}
-	if len(ptrs) == n { // delete head node
-		ptrs = append(ptrs, nil)
-		return ptrs[1]
-	}
-	ptrs[len(ptrs)-n-1].Next = ptrs[len(ptrs)-n].Next
-	return ptrs[0]
+	target := len(nodes) - n
+	nodes[target-1].Next = nodes[target].Next
+	return headNode.Next
 }

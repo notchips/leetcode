@@ -7,31 +7,20 @@ func longestCommonPrefix(strs []string) string {
 	if len(strs) == 0 {
 		return ""
 	}
-	if len(strs) == 1 {
-		return strs[0]
-	}
-
-	minLen := math.MaxInt32
-	for i := 0; i < len(strs); i++ {
+	minLen := len(strs[0])
+	for i := 1; i < len(strs); i++ {
 		if len(strs[i]) < minLen {
 			minLen = len(strs[i])
 		}
 	}
-
-	prefix := make([]byte, 0, 30)
-	for i := 0; i < minLen; i++ {
-		f := true
+	i := 0
+LOOP:
+	for ; i < minLen; i++ {
 		for j := 1; j < len(strs); j++ {
-			if strs[0][i] != strs[j][i] {
-				f = false
-				break
+			if strs[j][i] != strs[0][i] {
+				break LOOP
 			}
 		}
-		if f {
-			prefix = append(prefix, strs[0][i])
-		} else {
-			break
-		}
 	}
-	return string(prefix)
+	return strs[0][:i]
 }
