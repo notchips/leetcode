@@ -3,22 +3,28 @@
  *
  * [22] Generate Parentheses
  */
-func generateParenthesis(n int) []string {
-	ret := make([]string, 0, 20)
-	helper(&ret, "", 0, 0, 2*n)
-	return ret
+ func generateParenthesis(n int) []string {
+	ans := make([]string, 0, 20)
+	buf := make([]byte, 0, 2*n)
+	dfs(&ans, &buf, 0, 0, n)
+	return ans
 }
 
 // cnt1: count of '('
 // cnt2: count of ')'
-func helper(ret *[]string, str string, cnt1, cnt2, total int) {
-	if cnt1 < total/2 {
-		helper(ret, str+"(", cnt1+1, cnt2, total)
+func dfs(ans *[]string, buf *[]byte, cnt1, cnt2, n int) {
+	if len(*buf) == 2*n {
+		*ans = append(*ans, string(*buf))
+		return
+	}
+	if cnt1 < n {
+		*buf = append(*buf, '(')
+		dfs(ans, buf, cnt1+1, cnt2, n)
+		*buf = (*buf)[:len(*buf)-1]
 	}
 	if cnt2 < cnt1 {
-		helper(ret, str+")", cnt1, cnt2+1, total)
-	}
-	if cnt1 == total/2 && cnt1 == cnt2 {
-		*ret = append(*ret, str)
+		*buf = append(*buf, ')')
+		dfs(ans, buf, cnt1, cnt2+1, n)
+		*buf = (*buf)[:len(*buf)-1]
 	}
 }

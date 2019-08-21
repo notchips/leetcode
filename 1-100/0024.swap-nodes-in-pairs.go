@@ -10,16 +10,12 @@
  *     Next *ListNode
  * }
  */
-func swapPairs(head *ListNode) *ListNode {
-	headNode := &ListNode{0, head}
-	pre := headNode
-	for head != nil {
-		if head.Next != nil {
-			pre.Next = head.Next
-			pre = head
-			head.Next, head.Next.Next = head.Next.Next, head
-		}
-		head = head.Next
+ func swapPairs(head *ListNode) *ListNode {
+	if head == nil || head.Next == nil {
+		return head
 	}
-	return headNode.Next
+	pre, post := head, head.Next
+	pre.Next = swapPairs(post.Next)
+	post.Next = pre
+	return post
 }
