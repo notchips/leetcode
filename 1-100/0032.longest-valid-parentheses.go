@@ -9,13 +9,12 @@ type charInfo struct {
 }
 
 func longestValidParentheses(s string) int {
-	stack := make([]charInfo, 0, len(s))
+	stack := make([]*charInfo, 0, len(s))
 	for i := 0; i < len(s); i++ {
 		if len(stack) > 0 && stack[len(stack)-1].char == '(' && s[i] == ')' {
 			stack = stack[:len(stack)-1]
 		} else {
-			ci := charInfo{s[i], i}
-			stack = append(stack, ci)
+			stack = append(stack, &charInfo{s[i], i})
 		}
 	}
 	if len(stack) == 0 {
