@@ -3,10 +3,9 @@
  *
  * [28] Implement strStr()
  */
- // KMP
-func strStr(haystack string, needle string) int {
-	i, j := 0, 0
+ func strStr(haystack string, needle string) int {
 	next := getNext(needle)
+	i, j := 0, 0
 	for i < len(haystack) && j < len(needle) {
 		if j == -1 || haystack[i] == needle[j] {
 			i, j = i+1, j+1
@@ -20,11 +19,11 @@ func strStr(haystack string, needle string) int {
 	return -1
 }
 
-func getNext(str string) []int {
-	next := make([]int, len(str)+1)
+func getNext(needle string) []int {
+	next := make([]int, len(needle)+1)
 	next[0] = -1
-	for i, j := 0, -1; i < len(str); {
-		if j == -1 || str[i] == str[j] {
+	for i, j := 0, -1; i < len(needle); {
+		if j == -1 || needle[i] == needle[j] {
 			i, j = i+1, j+1
 			next[i] = j
 		} else {

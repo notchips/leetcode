@@ -3,13 +3,13 @@
  *
  * [27] Remove Element
  */
-func removeElement(nums []int, val int) int {
-	pos := 0
+ func removeElement(nums []int, val int) int {
+	cnt := 0
 	for i := 0; i < len(nums); i++ {
 		if nums[i] != val {
-			nums[pos] = nums[i]
-			pos++
+			nums[cnt] = nums[i]
+			cnt++
 		}
 	}
-	return pos
+	return cnt
 }

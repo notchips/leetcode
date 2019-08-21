@@ -3,16 +3,16 @@
  *
  * [26] Remove Duplicates from Sorted Array
  */
-func removeDuplicates(nums []int) int {
+ func removeDuplicates(nums []int) int {
 	if len(nums) == 0 {
 		return 0
 	}
-	pos := 1
+	cnt := 1
 	for i := 1; i < len(nums); i++ {
-		if nums[i] != nums[pos-1] {
-			nums[pos] = nums[i]
-			pos++
+		if nums[i] != nums[i-1] {
+			nums[cnt] = nums[i]
+			cnt++
 		}
 	}
-	return pos
+	return cnt
 }

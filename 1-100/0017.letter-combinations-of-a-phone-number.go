@@ -25,9 +25,7 @@ func letterCombinations(digits string) []string {
 
 func dfs(hash map[byte][]byte, digits string, i int, ans *[]string, buf *[]byte) {
 	if i == len(digits) {
-		newBuf := make([]byte, len(*buf))
-		copy(newBuf, *buf)
-		*ans = append(*ans, string(newBuf))
+		*ans = append(*ans, string(*buf))
 		return
 	}
 	chars := hash[digits[i]]
