@@ -4,22 +4,19 @@
  * [45] Jump Game II
  */
 func jump(nums []int) int {
-	n := len(nums)
 	cnt := 0
-	for i := 0; i < n-1; {
-		if i+nums[i] >= n-1 {
-			cnt++
-			break
-		} else {
-			max := i + 1
-			for j := i + 2; j < n && j <= i+nums[i]; j++ {
-				if nums[j]+j >= nums[max]+max {
-					max = j
-				}
+	for start, end := 0, len(nums)-1; start < end; cnt++ {
+		bestNext := start + 1
+		for next := start + 2; next <= end && next <= start+nums[start]; next++ {
+			if next == end {
+				bestNext = next
+				break
 			}
-			cnt++
-			i = max
+			if next-bestNext+nums[next] >= nums[bestNext] {
+				bestNext = next
+			}
 		}
+		start = bestNext
 	}
 	return cnt
 }

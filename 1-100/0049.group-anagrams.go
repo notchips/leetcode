@@ -3,24 +3,26 @@
  *
  * [49] Group Anagrams
  */
-func groupAnagrams(strs []string) [][]string {
-	hash := make(map[[26]int][]string)
-	for _, s := range strs {
-		k := getKey(s)
-		hash[*k] = append(hash[*k], s)
-	}
-	ans := make([][]string, 0, len(hash))
-	for _, v := range hash {
-		ans = append(ans, v)
-	}
-	return ans
-}
+ type key [26]int
 
-func getKey(str string) *[26]int {
-	var k [26]int
-	for _, c := range str {
-		k[c-'a']++
-	}
-	return &k
-}
-
+ func groupAnagrams(strs []string) [][]string {
+	 m := make(map[key][]string)
+	 for _, s := range strs {
+		 k := getKey(s)
+		 m[*k] = append(m[*k], s)
+	 }
+	 ans := make([][]string, 0, len(m))
+	 for _, v := range m {
+		 ans = append(ans, v)
+	 }
+	 return ans
+ }
+ 
+ func getKey(s string) *key {
+	 var k key
+	 for _, c := range s {
+		 k[c-'a']++
+	 }
+	 return &k
+ }
+ 

@@ -4,29 +4,15 @@
  * [50] Pow(x, n)
  */
 func myPow(x float64, n int) float64 {
-	neg := false
+	if n == 0 {
+		return 1
+	}
+	if n&1 == 0 {
+		f := myPow(x, n/2)
+		return f * f
+	}
 	if n < 0 {
-		n = -n
-		neg = true
+		return 1 / x * myPow(x, n+1)
 	}
-
-	p := 1
-	ret := 1.0
-	tx := x
-	for n > 0 { // 倍数逼近，同1029
-		if n-p >= 0 {
-			n -= p
-			p *= 2
-			ret *= tx
-			tx *= tx
-		} else {
-			p = 1
-			tx = x
-		}
-	}
-
-	if neg {
-		return 1 / ret
-	}
-	return ret
+	return x * myPow(x, n-1)
 }

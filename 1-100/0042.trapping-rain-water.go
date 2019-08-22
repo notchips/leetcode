@@ -3,42 +3,40 @@
  *
  * [42] Trapping Rain Water
  */
-// 先计算初始面积，然后找到最高的点之一，以此为分界点，算出两边下雨后的面积。
+// 切分height，直到两端高度大于其余各点高度，这时可以直接计算出雨水面积
 func trap(height []int) int {
 	n := len(height)
-	if n == 0 {
+	if n <= 2 {
 		return 0
 	}
+	pos := maxHeightIndex(height, 1, n-2) // 获取除两端外的最大高度索引
+	if height[pos] <= height[0] && height[pos] <= height[n-1] { // 两端高度大于其余各点高度，直接得出雨水面积
+		return min(height[0], height[n-1])*(n-2) - area(height[1:n-1])
+	}
+	return trap(height[0:pos+1]) + trap(height[pos:]) // 以最大高度为界，继续切分
+}
 
-	area := 0
-	maxHeightIndex := 0
-	for i := 0; i < n; i++ {
-		area += height[i]
-		if height[i] > height[maxHeightIndex] {
-			maxHeightIndex = i
+func maxHeightIndex(height []int, left, right int) int {
+	pos := left
+	for i := left + 1; i <= right; i++ {
+		if height[i] > height[pos] {
+			pos = i
 		}
 	}
+	return pos
+}
 
-	rainArea := height[maxHeightIndex]
-	for left, right := 0, 0; right < maxHeightIndex; right++ {
-		if height[right] > height[left] {
-			rainArea += height[left] * (right - left)
-			left = right
-		}
-		if right+1 == maxHeightIndex {
-			rainArea += height[left] * (right - left + 1)
-		}
+func min(a, b int) int {
+	if a < b {
+		return a
 	}
+	return b
+}
 
-	for left, right := n-1, n-1; left > maxHeightIndex; left-- {
-		if height[left] > height[right] {
-			rainArea += height[right] * (right - left)
-			right = left
-		}
-		if left-1 == maxHeightIndex {
-			rainArea += height[right] * (right - left + 1)
-		}
+func area(height []int) int {
+	sum := 0
+	for i := 0; i < len(height); i++ {
+		sum += height[i]
 	}
-	
-	return rainArea - area
+	return sum
 }

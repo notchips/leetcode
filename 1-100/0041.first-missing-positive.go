@@ -4,16 +4,17 @@
  * [41] First Missing Positive
  */
 func firstMissingPositive(nums []int) int {
+	nums = append(nums, -1)
 	n := len(nums)
 	for i := 0; i < n; i++ {
-		for nums[i]-1 >= 0 && nums[i]-1 < n && nums[i] != nums[nums[i]-1] {
-			nums[i], nums[nums[i]-1] = nums[nums[i]-1], nums[i]
+		for 0 <= nums[i] && nums[i] < n && nums[i] != nums[nums[i]] {
+			nums[i], nums[nums[i]] = nums[nums[i]], nums[i]
 		}
 	}
-	for i := 0; i < n; i++ {
-		if nums[i] != i+1 {
-			return i + 1
+	for i := 1; i < n; i++ {
+		if nums[i] != i {
+			return i
 		}
 	}
-	return n + 1
+	return n
 }

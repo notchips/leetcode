@@ -7,56 +7,52 @@ func multiply(num1 string, num2 string) string {
 	if len(num1) < len(num2) {
 		num1, num2 = num2, num1
 	}
-	
 	ans := "0"
 	for i := len(num2) - 1; i >= 0; i-- {
 		p := multiplySingle(num1, num2[i])
 		ans = add(ans, p)
 		num1 += "0"
 	}
-	
 	return ans
 }
 
 func add(num1, num2 string) string {
 	n := max(len(num1), len(num2))
-
-	buff1 := make([]byte, n+1)
-	buff2 := make([]byte, n+1)
-	copy(buff1[n+1-len(num1):], num1)
-	copy(buff2[n+1-len(num2):], num2)
-
+	buf1 := make([]byte, n+1)
+	buf2 := make([]byte, n+1)
+	copy(buf1[n+1-len(num1):], num1)
+	copy(buf2[n+1-len(num2):], num2)
 	t := 0
 	for i := n; i >= 0; i-- {
-		sum := charToInt(buff1[i]) + charToInt(buff2[i]) + t
-		buff1[i] = intToChar(sum % 10)
+		sum := charToInt(buf1[i]) + charToInt(buf2[i]) + t
+		buf1[i] = intToChar(sum % 10)
 		t = sum / 10
 	}
-	if buff1[0] == '0' {
-		return string(buff1[1:])
+	if buf1[0] == '0' {
+		return string(buf1[1:])
 	}
-	return string(buff1)
+	return string(buf1)
 }
 
-func multiplySingle(s string, c byte) string {
+func multiplySingle(num string, c byte) string {
 	if c == '0' {
 		return "0"
 	}
 	if c == '1' {
-		return s
+		return num
 	}
-	buff := make([]byte, len(s)+1)
+	buf := make([]byte, len(num)+1)
 	t := 0
-	for i := len(s) - 1; i >= 0; i-- {
-		p := charToInt(s[i])*charToInt(c) + t
-		buff[i+1] = intToChar(p % 10)
+	for i := len(num) - 1; i >= 0; i-- {
+		p := charToInt(num[i])*charToInt(c) + t
+		buf[i+1] = intToChar(p % 10)
 		t = p / 10
 	}
-	buff[0] = intToChar(t)
-	if buff[0] == '0' {
-		return string(buff[1:])
+	buf[0] = intToChar(t)
+	if buf[0] == '0' {
+		return string(buf[1:])
 	}
-	return string(buff)
+	return string(buf)
 }
 
 func charToInt(c byte) int {

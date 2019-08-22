@@ -4,31 +4,30 @@
  * [47] Permutations II
  */
 func permuteUnique(nums []int) [][]int {
-	n := len(nums)
-	numCnt := make(map[int]int, n)
-	for i := 0; i < n; i++ {
-		numCnt[nums[i]]++
+	numCnt := make(map[int]int)
+	for _, num := range nums {
+		numCnt[num]++
 	}
-	answers := make([][]int, 0, 20)
-	answer := make([]int, 0, n)
-	dfs(&answers, &answer, numCnt, n)
-	return answers
+	ans := make([][]int, 0, 32)
+	buf := make([]int, 0, len(nums))
+	dfs(&ans, &buf, numCnt, len(nums))
+	return ans
 }
 
-func dfs(answers *[][]int, answer *[]int, numCnt map[int]int, n int) {
-	if len(*answer) == n {
-		newAnswer := make([]int, n)
-		copy(newAnswer, *answer)
-		*answers = append(*answers, newAnswer)
+func dfs(ans *[][]int, buf *[]int, numCnt map[int]int, n int) {
+	if len(*buf) == n {
+		newBuf := make([]int, n)
+		copy(newBuf, *buf)
+		*ans = append(*ans, newBuf)
 		return
 	}
-	for num, cnt := range numCnt {
-		if cnt > 0 {
+	for num := range numCnt {
+		if numCnt[num] > 0 {
+			*buf = append(*buf, num)
 			numCnt[num]--
-			*answer = append(*answer, num)
-			dfs(answers, answer, numCnt, n)
-			*answer = (*answer)[:len(*answer)-1]
+			dfs(ans, buf, numCnt, n)
 			numCnt[num]++
+			*buf = (*buf)[:len(*buf)-1]
 		}
 	}
 }
