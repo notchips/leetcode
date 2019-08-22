@@ -4,24 +4,16 @@
  * [35] Search Insert Position
  */
 func searchInsert(nums []int, target int) int {
-	lo, hi, pos := 0, len(nums)-1, -1
-	for lo <= hi {
-		md := lo + (hi-lo)/2
-		if target == nums[md] {
-			return md
-		} else if target < nums[md] {
-			hi = md - 1
+	left, right := 0, len(nums)-1
+	for left <= right {
+		mid := left + (right-left)/2
+		if nums[mid] == target {
+			return mid
+		} else if nums[mid] < target {
+			left = mid + 1
 		} else {
-			lo = md + 1
-			pos = max(pos, md)
+			right = mid - 1
 		}
 	}
-	return pos + 1
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
+	return left
 }

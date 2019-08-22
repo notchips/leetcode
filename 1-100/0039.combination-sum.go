@@ -4,26 +4,24 @@
  * [39] Combination Sum
  */
 func combinationSum(candidates []int, target int) [][]int {
-	rets := make([][]int, 0, 5)
-	ret := make([]int, 0, 10)
-	dfs(candidates, &rets, &ret, 0, 0, target)
-	return rets
+	ans := make([][]int, 0, 10)
+	buf := make([]int, 0, 10)
+	dfs(candidates, target, 0, 0, &ans, &buf)
+	return ans
 }
 
-func dfs(candidates []int, rets *[][]int, ret *[]int, index, sum, target int) {
-	if sum == target {
-		newRet := make([]int, len(*ret))
-		copy(newRet, *ret)
-		*rets = append(*rets, newRet)
+func dfs(candidates []int, target, sum, i int, ans *[][]int, buf *[]int) {
+	if target == sum && len(*buf) != 0 {
+		newBuf := make([]int, len(*buf))
+		copy(newBuf, *buf)
+		*ans = append(*ans, newBuf)
 		return
 	}
-	if sum > target || index >= len(candidates) {
+	if sum > target || i >= len(candidates) {
 		return
 	}
-
-	*ret = append(*ret, candidates[index])
-	dfs(candidates, rets, ret, index, sum+candidates[index], target)
-	*ret = (*ret)[:len(*ret)-1]
-
-	dfs(candidates, rets, ret, index+1, sum, target)
+	*buf = append(*buf, candidates[i])
+	dfs(candidates, target, sum+candidates[i], i, ans, buf)
+	*buf = (*buf)[:len(*buf)-1]
+	dfs(candidates, target, sum, i+1, ans, buf)
 }

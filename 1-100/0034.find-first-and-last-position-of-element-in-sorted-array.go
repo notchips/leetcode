@@ -4,49 +4,43 @@
  * [34] Find First and Last Position of Element in Sorted Array
  */
 func searchRange(nums []int, target int) []int {
-	left, right := math.MaxInt32, math.MinInt32
-	searchHelper(nums, target, 0, len(nums)-1, &left, &right)
-	if right > -1 {
-		return []int{left, right}
-	}
-	return []int{-1, -1}
-}
-
-func searchHelper(nums []int, target, lo, hi int, left, right *int) {
-	if lo > hi {
-		return
-	}
-	md := (lo + hi) / 2
-	if target == nums[md] {
-		*left = min(*left, md)
-		*right = max(*right, md)
-		if nums[lo] == target {
-			*left = min(*left, lo)
+	ans := []int{-1, -1}
+	left, right := 0, len(nums)-1
+	for left <= right {
+		mid := left + (right-left)/2
+		if nums[mid] == target {
+			ans[0] = firstEqual(nums, target, left, mid)
+			ans[1] = lastEqual(nums, target, mid, right)
+			break
+		} else if nums[mid] > target {
+			right = mid - 1
 		} else {
-			searchHelper(nums, target, lo, md-1, left, right)
+			left = mid + 1
 		}
-		if nums[hi] == target {
-			*right = max(*right, hi)
+	}
+	return ans
+}
+
+func firstEqual(nums []int, target, left, right int) int {
+	for left < right {
+		mid := left + (right-left)/2
+		if nums[mid] < target {
+			left = mid + 1
 		} else {
-			searchHelper(nums, target, md+1, hi, left, right)
+			right = mid
 		}
-	} else if target < nums[md] {
-		searchHelper(nums, target, lo, md-1, left, right)
-	} else {
-		searchHelper(nums, target, md+1, hi, left, right)
 	}
+	return left
 }
 
-func max(a, b int) int {
-	if a > b {
-		return a
+func lastEqual(nums []int, target, left, right int) int {
+	for left < right {
+		mid := left + (right-left)/2 + 1
+		if nums[mid] > target {
+			right = mid - 1
+		} else {
+			left = mid
+		}
 	}
-	return b
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
+	return left
 }

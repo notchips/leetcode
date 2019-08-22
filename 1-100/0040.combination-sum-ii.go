@@ -4,39 +4,36 @@
  * [40] Combination Sum II
  */
 func combinationSum2(candidates []int, target int) [][]int {
-	numsCnt := make(map[int]int)
-	for _, candidate := range candidates {
-		numsCnt[candidate]++
+	numCnt := make(map[int]int)
+	for _, num := range candidates {
+		numCnt[num]++
 	}
-	nums := make([]int, 0, len(candidates))
-	for num := range numsCnt {
+	nums := make([]int, 0, len(numCnt))
+	for num := range numCnt {
 		nums = append(nums, num)
 	}
-
-	answers := make([][]int, 0, 5)
-	answer := make([]int, 0, 10)
-	dfs(numsCnt, nums, &answers, &answer, 0, 0, target)
-	return answers
+	ans := make([][]int, 0, 10)
+	buf := make([]int, 0, 10)
+	dfs(numCnt, nums, target, 0, 0, &ans, &buf)
+	return ans
 }
 
-func dfs(numsCnt map[int]int, nums []int, answers *[][]int, answer *[]int, i, sum, target int) {
-	if sum == target {
-		newRet := make([]int, len(*answer))
-		copy(newRet, *answer)
-		*answers = append(*answers, newRet)
+func dfs(numCnt map[int]int, nums []int, target, sum, i int, ans *[][]int, buf *[]int) {
+	if target == sum && len(*buf) != 0 {
+		newBuf := make([]int, len(*buf))
+		copy(newBuf, *buf)
+		*ans = append(*ans, newBuf)
 		return
 	}
 	if sum > target || i >= len(nums) {
 		return
 	}
-
-	if numsCnt[nums[i]] > 0 {
-		numsCnt[nums[i]]--
-		*answer = append(*answer, nums[i])
-		dfs(numsCnt, nums, answers, answer, i, sum+nums[i], target)
-		*answer = (*answer)[:len(*answer)-1]
-		numsCnt[nums[i]]++
+	if numCnt[nums[i]] > 0 {
+		*buf = append(*buf, nums[i])
+		numCnt[nums[i]]--
+		dfs(numCnt, nums, target, sum+nums[i], i, ans, buf)
+		*buf = (*buf)[:len(*buf)-1]
+		numCnt[nums[i]]++
 	}
-
-	dfs(numsCnt, nums, answers, answer, i+1, sum, target)
+	dfs(numCnt, nums, target, sum, i+1, ans, buf)
 }
