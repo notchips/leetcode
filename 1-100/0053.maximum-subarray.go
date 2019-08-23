@@ -4,18 +4,16 @@
  * [53] Maximum Subarray
  */
 func maxSubArray(nums []int) int {
-	dp := make([]int, len(nums))
-	dp[0] = nums[0]
-	max := dp[0]
+	maxSum, sum := nums[0], nums[0]
 	for i := 1; i < len(nums); i++ {
-		if dp[i-1] > 0 {
-			dp[i] = nums[i] + dp[i-1]
+		if sum > 0 {
+			sum += nums[i]
 		} else {
-			dp[i] = nums[i]
+			sum = nums[i]
 		}
-		if dp[i] > max {
-			max = dp[i]
+		if sum > maxSum {
+			maxSum = sum
 		}
 	}
-	return max
+	return maxSum
 }

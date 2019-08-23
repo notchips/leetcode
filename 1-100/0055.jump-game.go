@@ -4,20 +4,17 @@
  * [55] Jump Game
  */
 func canJump(nums []int) bool {
-	n := len(nums)
-	for i := 0; i < n-1; {
-		if nums[i] == 0 {
+	for start, end := 0, len(nums)-1; start != end && start+nums[start] < end; {
+		if nums[start] == 0 {
 			return false
 		}
-
-		// 贪心，选择能跳最大距离的下一跳位置，同等距离情况下选择靠右的
-		max := i + 1
-		for j := i + 2; j < n && j <= i+nums[i]; j++ {
-			if nums[j]+j >= nums[max]+max {
-				max = j
+		bestNext := start + 1
+		for next := start + 2; next <= start+nums[start]; next++ {
+			if next-bestNext+nums[next] >= nums[bestNext] {
+				bestNext = next
 			}
 		}
-		i = max
+		start = bestNext
 	}
 	return true
 }
