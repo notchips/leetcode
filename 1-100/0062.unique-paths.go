@@ -4,21 +4,18 @@
  * [62] Unique Paths
  */
 func uniquePaths(m int, n int) int {
-	dp := make([][]int, n)
-	for i := 0; i < n; i++ {
-		dp[i] = make([]int, m)
+	dp := make([][]int, m)
+	for row := range dp {
+		dp[row] = make([]int, n)
 	}
-
-	for i := n - 1; i >= 0; i-- {
-		for j := m - 1; j >= 0; j-- {
-			if i == n-1 || j == m-1 {
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
+			if i == 0 || j == 0 {
 				dp[i][j] = 1
 			} else {
-				dp[i][j] = dp[i][j+1] + dp[i+1][j]
+				dp[i][j] = dp[i-1][j] + dp[i][j-1]
 			}
 		}
 	}
-
-	return dp[0][0]
+	return dp[m-1][n-1]
 }
-

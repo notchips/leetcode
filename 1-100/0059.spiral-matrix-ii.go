@@ -4,37 +4,30 @@
  * [59] Spiral Matrix II
  */
 func generateMatrix(n int) [][]int {
-	ans := make([][]int, n)
-	for i := 0; i < n; i++ {
-		ans[i] = make([]int, n)
+	matrix := make([][]int, n)
+	for i := range matrix {
+		matrix[i] = make([]int, n)
 	}
-
-	cnt := 1
-	for i, j := 0, 0; i < (n+1)/2; i, j = i+1, j+1 {
-		for k := j; k <= n-1-j; k++ {
-			ans[i][k] = cnt
-			cnt++
+	i := 0
+	iota := func() int {
+		i++
+		return i
+	}
+	for start, end := 0, n-1; start <= end; start, end = start+1, end-1 {
+		for col := start; col <= end; col++ {
+			matrix[start][col] = iota()
 		}
-
-		for k := i + 1; k <= n-2-i; k++ {
-			ans[k][n-1-j] = cnt
-			cnt++
+		for row := start + 1; row <= end-1; row++ {
+			matrix[row][end] = iota()
 		}
-
-		if i != n-1-i {
-			for k := n - 1 - j; k >= j; k-- {
-				ans[n-1-i][k] = cnt
-				cnt++
+		if start < end {
+			for col := end; col >= start; col-- {
+				matrix[end][col] = iota()
 			}
-		}
-
-		if j != n-1-j {
-			for k := n - 2 - i; k >= i+1; k-- {
-				ans[k][j] = cnt
-				cnt++
+			for row := end - 1; row >= start+1; row-- {
+				matrix[row][start] = iota()
 			}
 		}
 	}
-
-	return ans
+	return matrix
 }

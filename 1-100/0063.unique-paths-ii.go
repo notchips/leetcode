@@ -4,28 +4,25 @@
  * [63] Unique Paths II
  */
 func uniquePathsWithObstacles(obstacleGrid [][]int) int {
-	n, m := len(obstacleGrid), len(obstacleGrid[0])
-	dp := make([][]int, n)
-	for i := 0; i < n; i++ {
-		dp[i] = make([]int, m)
+	m, n := len(obstacleGrid), len(obstacleGrid[0])
+	dp := make([][]int, m)
+	for i := range dp {
+		dp[i] = make([]int, n)
 	}
-
-	for i := n - 1; i >= 0; i-- {
-		for j := m - 1; j >= 0; j-- {
-			if obstacleGrid[i][j] == 1 {
-				dp[i][j] = 0
-			} else if i == n-1 && j == m-1 {
-				dp[i][j] = 1
-			} else if i == n-1 {
-				dp[i][j] = dp[i][j+1]
-			} else if j == m-1 {
-				dp[i][j] = dp[i+1][j]
-			} else {
-				dp[i][j] = dp[i][j+1] + dp[i+1][j]
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++{
+			if obstacleGrid[i][j] == 0 {
+				if i == 0 && j == 0 {
+					dp[i][j] = 1
+				} else if i == 0 {
+					dp[i][j] = dp[i][j-1]
+				} else if j == 0 {
+					dp[i][j] = dp[i-1][j]
+				} else {
+					dp[i][j] = dp[i-1][j] + dp[i][j-1]
+				}
 			}
 		}
 	}
-
-	return dp[0][0]
+	return dp[m-1][n-1]
 }
-

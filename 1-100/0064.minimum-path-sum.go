@@ -3,20 +3,20 @@
  *
  * [64] Minimum Path Sum
  */
- func minPathSum(grid [][]int) int {
-	n, m := len(grid), len(grid[0])
-	for i := n - 1; i >= 0; i-- {
-		for j := m - 1; j >= 0; j-- {
-			if i != n-1 && j != m-1 {
-				grid[i][j] += min(grid[i][j+1], grid[i+1][j])
-			} else if i != n-1 {
-				grid[i][j] += grid[i+1][j]
-			} else if j != m-1 {
-				grid[i][j] += grid[i][j+1]
+func minPathSum(grid [][]int) int {
+	m, n := len(grid), len(grid[0])
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
+			if i == 0 && j > 0 {
+				grid[i][j] += grid[i][j-1]
+			} else if i > 0 && j == 0 {
+				grid[i][j] += grid[i-1][j]
+			} else if i > 0 && j > 0 {
+				grid[i][j] += min(grid[i-1][j], grid[i][j-1])
 			}
 		}
 	}
-	return grid[0][0]
+	return grid[m-1][n-1]
 }
 
 func min(a, b int) int {

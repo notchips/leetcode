@@ -4,12 +4,11 @@
  * [58] Length of Last Word
  */
 func lengthOfLastWord(s string) int {
+	s = strings.TrimSpace(s)
 	words := strings.Split(s, " ")
 	n := len(words)
-	for i := n - 1; i >= 0; i-- {
-		if len(words[i]) != 0 {
-			return len(words[i])
-		}
+	if n == 0 {
+		return 0
 	}
-	return 0
+	return len(words[n-1])
 }
