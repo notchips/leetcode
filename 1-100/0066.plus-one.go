@@ -12,7 +12,7 @@ func plusOne(digits []int) []int {
 			digits[i], carry = (digits[i]+carry)%10, (digits[i]+carry)/10
 		}
 	}
-	if carry != 0 {
+	if carry > 0 {
 		return append([]int{carry}, digits...)
 	}
 	return digits

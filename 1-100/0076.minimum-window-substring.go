@@ -4,50 +4,41 @@
  * [76] Minimum Window Substring
  */
 func minWindow(s string, t string) string {
-	var tCharCnt [256]int // 记录t中各字符的个数
+	hashT := make([]int, 128)
 	for i := 0; i < len(t); i++ {
-		tCharCnt[t[i]]++
+		hashT[t[i]]++
 	}
-
-	sCharIndex := make([]int, 0, 10) // 记录s关键索引（即s[i]包含在t中的索引i）
+	indexes := make([]int, 0, len(s))
 	for i := 0; i < len(s); i++ {
-		// 如果字符s[i]在t中
-		if tCharCnt[s[i]] > 0 {
-			sCharIndex = append(sCharIndex, i)
+		if hashT[s[i]] > 0 {
+			indexes = append(indexes, i)
 		}
 	}
-
-	var minLeft, minRight int       // 记录最小子串索引值
-	minLen, totalCnt := len(s)+1, 0 // minLen记录最小子串长度
-	var sCharCnt [256]int           // 记录子串的每个字符的个数
-	// 遍历s的关键索引
-	for left, right := 0, 0; right < len(sCharIndex); right++ {
-		leftChar, rightChar := s[sCharIndex[left]], s[sCharIndex[right]]
-		sCharCnt[rightChar]++
-
-		// 记录有效字符数
-		if sCharCnt[rightChar] <= tCharCnt[rightChar] {
-			totalCnt++
+	hashS := make([]int, 128)
+	var minLeft, minRight int
+	minLen := math.MaxInt64
+	cnt := 0
+	for curLeft, curRight := 0, 0; curRight < len(indexes); curRight++ {
+		leftChar, rightChar := s[indexes[curLeft]], s[indexes[curRight]]
+		if hashS[rightChar] < hashT[rightChar] {
+			cnt++
 		}
-
+		hashS[rightChar]++
 		// 去除左边多余字符
-		for sCharCnt[leftChar] > tCharCnt[leftChar] {
-			sCharCnt[leftChar]--
-			left++
-			leftChar = s[sCharIndex[left]]
+		for hashS[leftChar] > hashT[leftChar] {
+			hashS[leftChar]--
+			curLeft++
+			leftChar = s[indexes[curLeft]]
 		}
-
-		// 当s[sCharIndex[left], sCharIndex[right]] 包含t时
-		if totalCnt == len(t) {
-			curLen := sCharIndex[right] - sCharIndex[left] + 1
+		if cnt == len(t) {
+			curLen := indexes[curRight] - indexes[curLeft] + 1
 			if curLen < minLen {
-				minLen = curLen
-				minLeft, minRight = sCharIndex[left], sCharIndex[right]
+				minLen, minLeft, minRight = curLen, curLeft, curRight
 			}
 		}
 	}
-	if totalCnt < len(t) {
+	if cnt < len(t) {
 		return ""
 	}
-	return s[minLeft : minRight+1]
+	return s[indexes[minLeft] : indexes[minRight]+1]
 }

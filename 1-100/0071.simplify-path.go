@@ -5,7 +5,7 @@
  */
 func simplifyPath(path string) string {
 	nodes := strings.Split(path, "/")
-	stack := make([]string, 0, 10)
+	stack := make([]string, 0, len(nodes))
 	for _, node := range nodes {
 		if node == ".." && len(stack) > 0 {
 			stack = stack[:len(stack)-1]

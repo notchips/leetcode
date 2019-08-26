@@ -7,8 +7,9 @@ func searchMatrix(matrix [][]int, target int) bool {
 	if len(matrix) == 0 || len(matrix[0]) == 0 {
 		return false
 	}
+	m, n := len(matrix), len(matrix[0])
 	// 二分确定行数
-	top, down := 0, len(matrix)-1
+	top, down := 0, m-1
 	for top < down {
 		mid := top + (down-top)/2 + 1
 		if matrix[mid][0] > target {
@@ -18,9 +19,8 @@ func searchMatrix(matrix [][]int, target int) bool {
 		}
 	}
 	row := top
-
 	// 在该行进行二分查找
-	left, right := 0, len(matrix[0])-1
+	left, right := 0, n-1
 	for left <= right {
 		mid := left + (right-left)/2
 		if matrix[row][mid] == target {

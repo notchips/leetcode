@@ -4,22 +4,24 @@
  * [77] Combinations
  */
 func combine(n int, k int) [][]int {
-	var answers [][]int
-	var answer []int
-	dfs(&answers, &answer, 1, n, k)
-	return answers
+	ans := make([][]int, 0, 32)
+	buf := make([]int, 0, k)
+	dfs(&ans, &buf, 1, n, k)
+	return ans
 }
 
-func dfs(answers *[][]int, answer *[]int, start, n, k int) {
-	if len(*answer) == k {
-		newAnswer := make([]int, k)
-		copy(newAnswer, *answer)
-		*answers = append(*answers, newAnswer)
+func dfs(ans *[][]int, buf *[]int, i, n, k int) {
+	if len(*buf) == k {
+		newBuf := make([]int, k)
+		copy(newBuf, *buf)
+		*ans = append(*ans, newBuf)
 		return
 	}
-	for i := start; i <= n; i++ {
-		*answer = append(*answer, i)
-		dfs(answers, answer, i+1, n, k)
-		*answer = (*answer)[:len(*answer)-1]
+	if i > n {
+		return
 	}
+	*buf = append(*buf, i)
+	dfs(ans, buf, i+1, n, k)
+	*buf = (*buf)[:len(*buf)-1]
+	dfs(ans, buf, i+1, n, k)
 }

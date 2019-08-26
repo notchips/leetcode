@@ -7,38 +7,30 @@ func addBinary(a string, b string) string {
 	if len(b) > len(a) {
 		a, b = b, a
 	}
-
-	if len(a) == 0 {
-		return ""
+	n := len(a) + 1
+	bufA := make([]byte, n)
+	bufB := make([]byte, n)
+	for i := 0; i < n; i++ {
+		bufA[i], bufB[i] = '0', '0'
 	}
-
-	// 最多进2位
-	bufA := make([]byte, 2, len(a)+2)
-	bufB := make([]byte, 2+len(a)-len(b), len(a)+2)
-	bufA = append(bufA, a...)
-	bufB = append(bufB, b...)
-
+	copy(bufA[n-len(a):], a)
+	copy(bufB[n-len(b):], b)
 	carry := 0
-	for i := len(bufA) - 1; i >= 0; i-- {
-		sum := toInt(bufA[i]) + toInt(bufB[i]) + carry
-		bufA[i], carry = toChar(sum%2), sum/2
+	for i := n - 1; i > 0; i-- {
+		sum := charToInt(bufA[i]) + charToInt(bufB[i]) + carry
+		bufA[i], carry = intToChar(sum%2), sum/2
 	}
-
-	if bufA[0] != '0' {
-		return string(bufA)
-	} else if bufA[1] != '0' {
+	bufA[0] = intToChar(carry)
+	if bufA[0] == '0' {
 		return string(bufA[1:])
 	}
-	return string(bufA[2:])
+	return string(bufA)
 }
 
-func toChar(a int) byte {
-	return byte(a + '0')
+func intToChar(i int) byte {
+	return byte(i) + '0'
 }
 
-func toInt(c byte) int {
-	if c == 0 {
-		return 0
-	}
-	return int(c - '0')
+func charToInt(c byte) int {
+	return int(c) - '0'
 }

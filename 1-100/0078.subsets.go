@@ -4,21 +4,21 @@
  * [78] Subsets
  */
 func subsets(nums []int) [][]int {
-	var answers [][]int
-	var answer []int 
-	dfs(&answers, &answer, nums, 0, len(nums))
-	return answers
+	ans := make([][]int, 0, 32)
+	buf := make([]int, 0, len(nums))
+	dfs(&ans, &buf, nums, 0, len(nums))
+	return ans
 }
 
-func dfs(answers *[][]int, answer *[]int, nums []int, i, n int) {
-	if i >= n {
-		newAnswer := make([]int, len(*answer))
-		copy(newAnswer, *answer)
-		*answers = append(*answers, newAnswer)
+func dfs(ans *[][]int, buf *[]int, nums []int, i, n int) {
+	if i == n {
+		newBuf := make([]int, len(*buf))
+		copy(newBuf, *buf)
+		*ans = append(*ans, newBuf)
 		return
 	}
-	*answer = append(*answer, nums[i])
-	dfs(answers, answer, nums, i+1, n)
-	*answer = (*answer)[:len(*answer)-1]
-	dfs(answers, answer, nums, i+1, n)
+	*buf = append(*buf, nums[i])
+	dfs(ans, buf, nums, i+1, n)
+	*buf = (*buf)[:len(*buf)-1]
+	dfs(ans, buf, nums, i+1, n)
 }
