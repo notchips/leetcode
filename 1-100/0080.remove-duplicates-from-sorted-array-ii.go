@@ -4,12 +4,12 @@
  * [80] Remove Duplicates from Sorted Array II
  */
 func removeDuplicates(nums []int) int {
-	i := 0
+	pos := 0
 	for _, num := range nums {
-		if i < 2 || num > nums[i-2] {
-			nums[i] = num
-			i++
+		if pos < 2 || num != nums[pos-2] {
+			nums[pos] = num
+			pos++
 		}
 	}
-	return i
+	return pos
 }
