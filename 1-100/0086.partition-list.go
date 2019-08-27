@@ -12,21 +12,18 @@
  */
 func partition(head *ListNode, x int) *ListNode {
 	// 将原链表分为两部分，左部分小于x，右部分大或等于x
-	leftHeadNode := &ListNode{0, nil}
-	leftTempNode := leftHeadNode
-	rightHeadNode := &ListNode{0, nil}
-	rightTempNode := rightHeadNode
-	for head != nil {
+	leftHeadNode, rightHeadNode := new(ListNode), new(ListNode)
+	leftPreNode, rightPreNode := leftHeadNode, rightHeadNode
+	for ; head != nil; head = head.Next {
 		if head.Val < x {
-			leftTempNode.Next = head
-			leftTempNode = head
+			leftPreNode.Next = head
+			leftPreNode = leftPreNode.Next
 		} else {
-			rightTempNode.Next = head
-			rightTempNode = head
+			rightPreNode.Next = head
+			rightPreNode = rightPreNode.Next
 		}
-		head = head.Next
 	}
-	rightTempNode.Next = nil
-	leftTempNode.Next = rightHeadNode.Next
+	rightPreNode.Next = nil
+	leftPreNode.Next = rightHeadNode.Next
 	return leftHeadNode.Next
 }

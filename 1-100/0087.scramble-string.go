@@ -11,13 +11,14 @@ func isScramble(s1 string, s2 string) bool {
 	if len(s1) != len(s2) {
 		return false
 	}
-	ret := make(map[pair]bool) // 保存结果，避免重复计算
-	return isScrambleHelper(s1, s2, ret)
+	dp := make(map[pair]bool) // 保存结果，避免重复计算
+	return isScrambleHelper(s1, s2, dp)
 }
 
-func isScrambleHelper(s1, s2 string, ret map[pair]bool) bool {
+func isScrambleHelper(s1, s2 string, dp map[pair]bool) bool {
+	p := pair{s1, s2}
 	// 如果s1,s2已经有了结果，则直接返回
-	if r, ok := ret[pair{s1, s2}]; ok {
+	if r, ok := dp[p]; ok {
 		return r
 	}
 
@@ -40,9 +41,9 @@ func isScrambleHelper(s1, s2 string, ret map[pair]bool) bool {
 
 	// 切分s1和s2，判断对应的子串是否满足，其中s2有两种切分（对应左右互换）
 	for i := 1; i < n; i++ {
-		ret[pair{s1, s2}] = isScramble(s1[:i], s2[:i]) && isScramble(s1[i:], s2[i:]) ||
+		dp[p] = isScramble(s1[:i], s2[:i]) && isScramble(s1[i:], s2[i:]) ||
 			isScramble(s1[:i], s2[n-i:]) && isScramble(s1[i:], s2[:n-i])
-		if ret[pair{s1, s2}] {
+		if dp[p] {
 			return true
 		}
 	}
