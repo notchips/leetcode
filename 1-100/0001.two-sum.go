@@ -4,15 +4,12 @@
  * [1] Two Sum
  */
 func twoSum(nums []int, target int) []int {
-	ans := make([]int, 2)
-	hash := make(map[int]int) // value to index
+	numMap := make(map[int]int, len(nums)) // value to index
 	for i, num := range nums {
-		toFind := target - num
-		if _, ok := hash[toFind]; ok {
-			ans[0], ans[1] = hash[toFind], i
-			break
+		if j, ok := numMap[target-num]; ok {
+			return []int{j, i}
 		}
-		hash[num] = i
+		numMap[num] = i
 	}
-	return ans
+	return nil
 }
