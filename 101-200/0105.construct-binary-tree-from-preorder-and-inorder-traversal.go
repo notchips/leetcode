@@ -15,15 +15,16 @@ func buildTree(preorder []int, inorder []int) *TreeNode {
 	if len(preorder) == 0 {
 		return nil
 	}
+	value := preorder[0]
 	var mid int
 	for i, v := range inorder {
-		if v == preorder[0] {
+		if v == value {
 			mid = i
 			break
 		}
 	}
 	return &TreeNode{
-		Val:   preorder[0],
+		Val:   value,
 		Left:  buildTree(preorder[1:mid+1], inorder[:mid]),
 		Right: buildTree(preorder[mid+1:], inorder[mid+1:]),
 	}
