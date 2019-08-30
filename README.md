@@ -1,2 +1,2 @@
 # leetcode
-my leetcode code
+my leetcode code in go
