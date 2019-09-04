@@ -8,13 +8,13 @@ func maxProfit(prices []int) int {
 	if n == 0 {
 		return 0
 	}
-	// maxProfitEndWith[i] 表示从0到i天内一次交易的最大利润
+	// maxProfitEndWith[i] 表示从0到i天内只交易一次的最大利润
 	maxProfitEndWith := make([]int, n)
 	for minPrice, today := prices[0], 1; today < n; today++ {
 		maxProfitEndWith[today] = max(maxProfitEndWith[today-1], prices[today]-minPrice)
 		minPrice = min(minPrice, prices[today])
 	}
-	// maxProfitStartWith[i] 表示从i到n-1天内一次交易的最大利润
+	// maxProfitStartWith[i] 表示从i到n-1天内只交易一次的最大利润
 	maxProfitStartWith := make([]int, n)
 	for maxPrice, today := prices[n-1], n-2; today >= 0; today-- {
 		maxProfitStartWith[today] = max(maxProfitStartWith[today+1], maxPrice-prices[today])

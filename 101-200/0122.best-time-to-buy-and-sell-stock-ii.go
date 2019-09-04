@@ -5,22 +5,22 @@
  */
 func maxProfit(prices []int) int {
 	n := len(prices)
-	if n == 0 {
+	if n < 2 {
 		return 0
 	}
-	maxProfit := make([]int, n) // maxProfit[i] 表示前i天的最大利润
+	profits := make([]int, n) // profits[i] 表示前i天的最大利润
 	for today := 1; today < n; today++ {
-		maxProfit[today] = maxProfit[today-1] // 不选择today售出时，最大利润不变
+		profits[today] = profits[today-1] // 不选择today售出时，最大利润不变
 		// 遍历之前的价格，枚举如果before买进，today卖出产生的最大利润
 		for before := today - 1; before >= 0 && prices[before] < prices[today]; before-- {
 			if before == 0 {
-				maxProfit[today] = max(maxProfit[today], prices[today]-prices[before])
+				profits[today] = max(profits[today], prices[today]-prices[before])
 			} else {
-				maxProfit[today] = max(maxProfit[today], prices[today]-prices[before]+maxProfit[before-1])
+				profits[today] = max(profits[today], prices[today]-prices[before]+profits[before-1])
 			}
 		}
 	}
-	return maxProfit[n-1]
+	return profits[n-1]
 }
 
 func max(a, b int) int {

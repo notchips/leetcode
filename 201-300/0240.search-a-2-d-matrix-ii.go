@@ -8,18 +8,18 @@ func searchMatrix(matrix [][]int, target int) bool {
 		return false
 	}
 	m, n := len(matrix), len(matrix[0])
-	i, j := 0, n-1 //从右上角开始遍历，每次可排除一行或一列
-	for i < m-1 && j > 0 {
-		if matrix[i][j] == target {
+	row, col := 0, n-1 //从右上角开始遍历，每次可排除一行或一列
+	for row < m-1 && col > 0 {
+		if matrix[row][col] == target {
 			return true
-		} else if matrix[i][j] < target {
-			i++
+		} else if matrix[row][col] < target {
+			row++
 		} else {
-			j--
+			col--
 		}
 	}
-	if i == m-1 { // 遍历到最后一行，二分搜索
-		left, right := 0, j
+	if row == m-1 { // 遍历到最后一行，二分搜索
+		left, right := 0, col
 		for left <= right {
 			mid := left + (right-left)/2
 			if matrix[m-1][mid] == target {
@@ -30,16 +30,16 @@ func searchMatrix(matrix [][]int, target int) bool {
 				right = mid - 1
 			}
 		}
-	} else { // j == 0， 遍历到第一列，二分搜索
-		left, right := i, m-1
-		for left <= right {
-			mid := left + (right-left)/2
+	} else { // col == 0， 遍历到第一列，二分搜索
+		top, down := row, m-1
+		for top <= down {
+			mid := top + (down-top)/2
 			if matrix[mid][0] == target {
 				return true
 			} else if matrix[mid][0] < target {
-				left = mid + 1
+				top = mid + 1
 			} else {
-				right = mid - 1
+				down = mid - 1
 			}
 		}
 	}
