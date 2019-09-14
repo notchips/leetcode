@@ -3,18 +3,15 @@
  *
  * [9] Palindrome Number
  */
+package leetcode
+
+// @lc code=start
 func isPalindrome(x int) bool {
-	if x < 0 {
-		return false
+	y := 0
+	for t := x; t > 0; t /= 10 {
+		y = y*10 + t%10
 	}
-	return x == reverse(x)
+	return x == y
 }
 
-func reverse(x int) int {
-	y := 0
-	for x > 0 {
-		y = y*10 + x%10
-		x /= 10
-	}
-	return y
-}
+// @lc code=end

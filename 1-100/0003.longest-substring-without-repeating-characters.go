@@ -3,17 +3,26 @@
  *
  * [3] Longest Substring Without Repeating Characters
  */
+package leetcode
+
+// @lc code=start
 func lengthOfLongestSubstring(s string) int {
-	hash := make(map[rune]int) // value to index
-	maxLen, left := 0, 0
-	for right, c := range s {
-		if _, ok := hash[c]; ok && hash[c] >= left {
-			left = hash[c] + 1
+	var hash [256]int // char到index的映射
+	for i := range hash {
+		hash[i] = -1
+	}
+	maxLen := 0
+	for l, r := 0, 0; r < len(s); r++ {
+		c := s[r]
+		if hash[c] >= l {
+			l = hash[c] + 1
 		}
-		hash[c] = right
-		if right-left+1 > maxLen {
-			maxLen = right - left + 1
+		hash[c] = r
+		if curLen := r - l + 1; curLen > maxLen {
+			maxLen = curLen
 		}
 	}
 	return maxLen
 }
+
+// @lc code=end

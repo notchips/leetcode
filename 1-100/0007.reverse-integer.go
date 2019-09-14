@@ -3,14 +3,21 @@
  *
  * [7] Reverse Integer
  */
- func reverse(x int) int {
-	ans := 0
+package leetcode
+
+import "math"
+
+// @lc code=start
+func reverse(x int) int {
+	y := 0
 	for x != 0 {
-		ans = ans*10 + x%10
+		y = y*10 + x%10
 		x /= 10
+		if y < math.MinInt32 || y > math.MaxInt32 {
+			return 0
+		}
 	}
-	if ans > math.MaxInt32 || ans < math.MinInt32 {
-		return 0
-	}
-	return ans
+	return y
 }
+
+// @lc code=end

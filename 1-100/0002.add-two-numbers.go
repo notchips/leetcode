@@ -3,7 +3,14 @@
  *
  * [2] Add Two Numbers
  */
- 
+package leetcode
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+
+// @lc code=start
 /**
  * Definition for singly-linked list.
  * type ListNode struct {
@@ -12,23 +19,26 @@
  * }
  */
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
+	headNode := &ListNode{Next: l1}
+	pre := headNode
 	carry := 0
-	head := l1
-	var pre *ListNode // l1 pre-node
 	for l1 != nil && l2 != nil {
-		l1.Val, carry = (l1.Val+l2.Val+carry)%10, (l1.Val+l2.Val+carry)/10
-		pre, l1, l2 = l1, l1.Next, l2.Next
+		sum := l1.Val + l2.Val + carry
+		l1.Val, carry = sum%10, sum/10
+		l1, l2, pre = l1.Next, l2.Next, l1
 	}
-	if l2 != nil { // l1 == nil && l2 !=nil
-		pre.Next, l1 = l2, l2
-	} 
-	// l2 == nil && l1 !=nil
-	for carry > 0 && l1 != nil {
-		l1.Val, carry = (l1.Val+carry)%10, (l1.Val+carry)/10
-		pre, l1 = l1, l1.Next
+	if l2 != nil { // l1 == nil && l2 != nil
+		l1, pre.Next = l2, l2
 	}
-	if carry != 0 {
-		pre.Next = &ListNode{carry, nil}
+	for carry > 0 && l1 != nil { // l1 != nil && l2 == nil
+		sum := l1.Val + carry
+		l1.Val, carry = sum%10, sum/10
+		l1, pre = l1.Next, l1
 	}
-	return head
+	if carry > 0 {
+		pre.Next = &ListNode{Val: carry, Next: nil}
+	}
+	return headNode.Next
 }
+
+// @lc code=end

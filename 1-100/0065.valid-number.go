@@ -3,6 +3,13 @@
  *
  * [65] Valid Number
  */
+
+// var reg = regexp.MustCompile(`^[\s]*[-+]?(([\d]+([.][\d]*)?)|([.][\d]+))([eE][-+]?[\d]+)?[\s]*$`)
+
+// func isNumber(s string) bool {
+// 	return reg.MatchString(s)
+// }
+
 func isNumber(s string) bool {
 	s = strings.TrimSpace(s)
 	return isInteger(s) || isDecimal(s) || isScientific(s)

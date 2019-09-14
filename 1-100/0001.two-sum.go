@@ -3,13 +3,19 @@
  *
  * [1] Two Sum
  */
+package leetcode
+
+// @lc code=start
 func twoSum(nums []int, target int) []int {
-	numMap := make(map[int]int, len(nums)) // value to index
+	hash := make(map[int]int) // num到index的映射
 	for i, num := range nums {
-		if j, ok := numMap[target-num]; ok {
+		toFind := target - num
+		if j, ok := hash[toFind]; ok {
 			return []int{j, i}
 		}
-		numMap[num] = i
+		hash[num] = i
 	}
 	return nil
 }
+
+// @lc code=end

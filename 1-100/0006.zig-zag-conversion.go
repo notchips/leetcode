@@ -3,19 +3,26 @@
  *
  * [6] ZigZag Conversion
  */
+package leetcode
+
+// @lc code=start
 func convert(s string, numRows int) string {
 	if numRows < 2 {
 		return s
 	}
-	tempArr := make([]byte, 0, len(s))
-	for i := 0; i < numRows; i++ {
-		for j := i; j < len(s); j += (numRows - 1) * 2 {
-			tempArr = append(tempArr, s[j])
-			extra := j + (numRows-1-i)*2
-			if i != 0 && i != numRows-1 && extra < len(s) {
-				tempArr = append(tempArr, s[extra])
+	buf := make([]byte, 0, len(s))
+	for row := 0; row < numRows; row++ {
+		for pos := row; pos < len(s); pos += 2 * (numRows - 1) {
+			buf = append(buf, s[pos])
+			if 0 < row && row < numRows-1 {
+				extra := pos + 2*(numRows-1-row)
+				if extra < len(s) {
+					buf = append(buf, s[extra])
+				}
 			}
 		}
 	}
-	return string(tempArr)
+	return string(buf)
 }
+
+// @lc code=end

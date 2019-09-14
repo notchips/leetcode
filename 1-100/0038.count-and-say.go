@@ -4,20 +4,16 @@
  * [38] Count and Say
  */
 func countAndSay(n int) string {
-	s := "1"
-	for i := 1; i < n; i++ {
-		say := ""
-		cnt := 1
-		for i := 1; i < len(s); i++ {
-			if s[i] == s[i-1] {
-				cnt++
-			} else {
-				say += fmt.Sprintf("%d%c", cnt, s[i-1])
-				cnt = 1
+	say := []byte{'1'}
+	for ; n > 1; n-- {
+		var newSay []byte
+		for i, cnt := 0, 1; i < len(say); i, cnt = i+1, cnt+1 {
+			if i == len(say)-1 || say[i] != say[i+1] {
+				newSay = append(append(newSay, strconv.Itoa(cnt)...), say[i])
+				cnt = 0
 			}
 		}
-		say += fmt.Sprintf("%d%c", cnt, s[len(s)-1])
-		s = say
+		say = newSay
 	}
-	return s
+	return string(say)
 }

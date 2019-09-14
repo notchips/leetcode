@@ -13,9 +13,9 @@
  */
 func pathSum(root *TreeNode, sum int) [][]int {
 	if root == nil {
-		return [][]int{}
+		return nil
 	}
-	paths := make([][]int, 0, 8)
+	var paths [][]int
 	path := []int{root.Val}
 	dfs(root, sum-root.Val, &paths, &path)
 	return paths
@@ -30,14 +30,11 @@ func dfs(root *TreeNode, sum int, paths *[][]int, path *[]int) {
 		}
 		return
 	}
-	if root.Left != nil {
-		*path = append(*path, root.Left.Val)
-		dfs(root.Left, sum-root.Left.Val, paths, path)
-		*path = (*path)[:len(*path)-1]
-	}
-	if root.Right != nil {
-		*path = append(*path, root.Right.Val)
-		dfs(root.Right, sum-root.Right.Val, paths, path)
-		*path = (*path)[:len(*path)-1]
+	for _, child := range []*TreeNode{root.Left, root.Right} {
+		if child != nil {
+			*path = append(*path, child.Val)
+			dfs(child, sum-child.Val, paths, path)
+			*path = (*path)[:len(*path)-1]
+		}
 	}
 }

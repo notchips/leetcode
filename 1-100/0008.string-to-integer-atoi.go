@@ -3,38 +3,54 @@
  *
  * [8] String to Integer (atoi)
  */
- func myAtoi(str string) int {
-	str = strings.TrimSpace(str)
+package leetcode
+
+import (
+	"math"
+)
+
+// @lc code=start
+func myAtoi(str string) int {
+	// 移除前置空格
+	pos := 0
+	for pos < len(str) && str[pos] == ' ' {
+		pos++
+	}
+	if pos >= len(str) {
+		return 0
+	}
+	str = str[pos:]
+
 	ans := 0
-	for i, neg := 0, false; i < len(str); i++ {
-		// 检查正负号
-		if i == 0 && (str[0] == '-' || str[0] == '+') {
-			if str[0] == '-' {
-				neg = true
-			}
+	neg := false
+	for i := 0; i < len(str); i++ {
+		if i == 0 && (str[i] == '-' || str[i] == '+') {
+			neg = str[i] == '-'
 			continue
 		}
 
-		// 遇到非数字直接返回结果
 		if str[i] < '0' || str[i] > '9' {
-			return ans
+			break
 		}
 
-		ans = ans*10 + charToInt(str[i], neg)
+		ans = ans*10 + byteToInt(str[i], neg)
 
-		// 超过int32直接返回int32边界值
+		if ans < math.MinInt32 {
+			return math.MinInt32
+		}
 		if ans > math.MaxInt32 {
 			return math.MaxInt32
-		} else if ans < math.MinInt32 {
-			return math.MinInt32
 		}
 	}
 	return ans
 }
 
-func charToInt(c byte, neg bool) int {
+func byteToInt(c byte, neg bool) int {
+	i := int(c - '0')
 	if neg {
-		return -1 * int(c-'0')
+		return -i
 	}
-	return int(c - '0')
+	return i
 }
+
+// @lc code=end

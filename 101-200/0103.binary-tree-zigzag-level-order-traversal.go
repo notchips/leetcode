@@ -11,7 +11,7 @@
  *     Right *TreeNode
  * }
  */
- func zigzagLevelOrder(root *TreeNode) [][]int {
+func zigzagLevelOrder(root *TreeNode) [][]int {
 	if root == nil {
 		return [][]int{}
 	}
