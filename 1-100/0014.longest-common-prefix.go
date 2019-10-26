@@ -3,22 +3,26 @@
  *
  * [14] Longest Common Prefix
  */
+package leetcode
+
+// @lc code=start
 func longestCommonPrefix(strs []string) string {
-	n := len(strs)
-	if n == 0 {
+	if len(strs) == 0 {
 		return ""
 	}
-	if n == 1 {
+	if len(strs) == 1 {
 		return strs[0]
 	}
 	pos := 0
 LOOP:
 	for ; ; pos++ {
-		for _, str := range strs {
-			if pos >= len(str) || str[pos] != strs[0][pos] {
+		for _, s := range strs {
+			if pos >= len(s) || s[pos] != strs[0][pos] {
 				break LOOP
 			}
 		}
 	}
 	return strs[0][:pos]
 }
+
+// @lc code=end

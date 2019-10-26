@@ -3,41 +3,30 @@
  *
  * [13] Roman to Integer
  */
+package leetcode
+
+// @lc code=start
 func romanToInt(s string) int {
-	ret := 0
+	hash := map[byte]int{
+		'I': 1,
+		'V': 5,
+		'X': 10,
+		'L': 50,
+		'C': 100,
+		'D': 500,
+		'M': 1000,
+	}
+	sum := 0
 	for i := 0; i < len(s); i++ {
-		ret += singleToInt(s[i])
-		if i > 0 {
-			switch {
-			case s[i-1] == 'I' && (s[i] == 'V' || s[i] == 'X'):
-				ret -= 2
-			case s[i-1] == 'X' && (s[i] == 'L' || s[i] == 'C'):
-				ret -= 20
-			case s[i-1] == 'C' && (s[i] == 'D' || s[i] == 'M'):
-				ret -= 200
+		sum += hash[s[i]]
+		if i < len(s)-1 {
+			switch s[i : i+2] {
+			case "IV", "IX", "XL", "XC", "CD", "CM":
+				sum -= 2 * hash[s[i]]
 			}
 		}
 	}
-	return ret
+	return sum
 }
 
-func singleToInt(c byte) int {
-	switch c {
-	case 'I':
-		return 1
-	case 'V':
-		return 5
-	case 'X':
-		return 10
-	case 'L':
-		return 50
-	case 'C':
-		return 100
-	case 'D':
-		return 500
-	case 'M':
-		return 1000
-	default:
-		return 0
-	}
-}
+// @lc code=end

@@ -3,35 +3,36 @@
  *
  * [17] Letter Combinations of a Phone Number
  */
+package leetcode
+
+// @lc code=start
 func letterCombinations(digits string) []string {
 	if len(digits) == 0 {
 		return nil
 	}
-	hash := map[byte][]byte{
-		'2': {'a', 'b', 'c'},
-		'3': {'d', 'e', 'f'},
-		'4': {'g', 'h', 'i'},
-		'5': {'j', 'k', 'l'},
-		'6': {'m', 'n', 'o'},
-		'7': {'p', 'q', 'r', 's'},
-		'8': {'t', 'u', 'v'},
-		'9': {'w', 'x', 'y', 'z'},
+	for i := 0; i < len(digits); i++ {
+		if digits[i] < '2' || digits[i] > '9' {
+			return nil
+		}
 	}
+	hash := []string{"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"}
 	ans := make([]string, 0, 20)
-	buf := make([]byte, 0, 4*len(digits))
-	dfs(hash, digits, 0, &ans, &buf)
+	buf := make([]byte, 0, len(digits))
+	dfs17(digits, hash, &ans, &buf)
 	return ans
 }
 
-func dfs(hash map[byte][]byte, digits string, i int, ans *[]string, buf *[]byte) {
-	if i == len(digits) {
+func dfs17(digits string, hash []string, ans *[]string, buf *[]byte) {
+	if len(digits) == 0 {
 		*ans = append(*ans, string(*buf))
 		return
 	}
-	chars := hash[digits[i]]
-	for _, char := range chars {
-		*buf = append(*buf, char)
-		dfs(hash, digits, i+1, ans, buf)
+	d := int(digits[0] - '0')
+	for i := 0; i < len(hash[d]); i++ {
+		*buf = append(*buf, hash[d][i])
+		dfs17(digits[1:], hash, ans, buf)
 		*buf = (*buf)[:len(*buf)-1]
 	}
 }
+
+// @lc code=end

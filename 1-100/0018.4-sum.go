@@ -3,29 +3,35 @@
  *
  * [18] 4Sum
  */
+package leetcode
+
+import "sort"
+
+// @lc code=start
 func fourSum(nums []int, target int) [][]int {
-	n := len(nums)
 	sort.Ints(nums)
-	ans := make([][]int, 0, 10)
+	var ans [][]int
+	n := len(nums)
 	for i := 0; i < n-3; i++ {
-		if i == 0 || (i > 0 && nums[i] != nums[i-1]) {
+		if i == 0 || nums[i] != nums[i-1] {
 			for j := i + 1; j < n-2; j++ {
-				if j == i+1 || (j > i+1 && nums[j] != nums[j-1]) {
-					for lo, hi := j+1, n-1; lo < hi; {
-						sum := nums[i] + nums[j] + nums[lo] + nums[hi]
+				if j == i+1 || nums[j] != nums[j-1] {
+					l, r := j+1, n-1
+					for l < r {
+						sum := nums[i] + nums[j] + nums[l] + nums[r]
 						if sum == target {
-							ans = append(ans, []int{nums[i], nums[j], nums[lo], nums[hi]})
-							for lo+1 < hi && nums[lo] == nums[lo+1] {
-								lo++
+							ans = append(ans, []int{nums[i], nums[j], nums[l], nums[r]})
+							for l+1 < r && nums[l+1] == nums[l] {
+								l++
 							}
-							for lo < hi-1 && nums[hi-1] == nums[hi] {
-								hi--
+							for l < r-1 && nums[r-1] == nums[r] {
+								r--
 							}
-							lo, hi = lo+1, hi-1
+							l, r = l+1, r-1
 						} else if sum < target {
-							lo++
+							l++
 						} else {
-							hi--
+							r--
 						}
 					}
 				}
@@ -34,3 +40,5 @@ func fourSum(nums []int, target int) [][]int {
 	}
 	return ans
 }
+
+// @lc code=end

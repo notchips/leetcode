@@ -3,50 +3,45 @@
  *
  * [12] Integer to Roman
  */
+package leetcode
+
+// @lc code=start
+
 func intToRoman(num int) string {
+	hash := map[int]string{
+		1:    "IVX",
+		10:   "XLC",
+		100:  "CDM",
+		1000: "M--",
+	}
 	buff := make([]byte, 0, 20)
-	for i := 1000; i > 0; i /= 10 {
-		n := num / i
-		num %= i
-		switch i {
-		case 1:
-			singleToRoman(&buff, 'I', 'V', 'X', n)
-		case 10:
-			singleToRoman(&buff, 'X', 'L', 'C', n)
-		case 100:
-			singleToRoman(&buff, 'C', 'D', 'M', n)
-		case 1000:
-			singleToRoman(&buff, 'M', '-', '-', n)
-		}
+	for m := 1000; m > 0; m /= 10 {
+		singleToRoman(&buff, hash[m][0], hash[m][1], hash[m][2], num/m)
+		num %= m
 	}
 	return string(buff)
 }
 
-/*
-a b c
-I V X
-X L C
-C D M
-M - -
-*/
 func singleToRoman(buff *[]byte, a, b, c byte, n int) {
 	switch {
 	case 1 <= n && n <= 3:
-		addChar(buff, a, n)
+		addChars(buff, a, n)
 	case n == 4:
-		addChar(buff, a, 1)
-		addChar(buff, b, 1)
+		addChars(buff, a, 1)
+		addChars(buff, b, 1)
 	case 5 <= n && n <= 8:
-		addChar(buff, b, 1)
-		addChar(buff, a, n-5)
+		addChars(buff, b, 1)
+		addChars(buff, a, n-5)
 	case n == 9:
-		addChar(buff, a, 1)
-		addChar(buff, c, 1)
+		addChars(buff, a, 1)
+		addChars(buff, c, 1)
 	}
 }
 
-func addChar(buff *[]byte, char byte, n int) {
+func addChars(buff *[]byte, char byte, n int) {
 	for i := 0; i < n; i++ {
 		*buff = append(*buff, char)
 	}
 }
+
+// @lc code=end

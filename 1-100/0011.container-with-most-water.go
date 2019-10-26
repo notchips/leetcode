@@ -3,37 +3,34 @@
  *
  * [11] Container With Most Water
  */
+package leetcode
+
+import "math"
+
+// 证明遍历到了最大值：
+// 1.令v[l, r] 表示以l，r范围的面积；
+// 2.当 height[r] < height[r]时，l++，遍历v[l+1, j]。
+//   也就是说忽略了v[l, r-1], v[l, r-2]...的情况，
+//   而被忽略的情况由于底是小于(r-l)的，最大高度被限制为height[l]。
+//   而height[l] < height[r]，因此遍历过程中肯定遍历到了最大值
+
+// @lc code=start
 func maxArea(height []int) int {
 	maxArea := 0
-	for i, j := 0, len(height)-1; i < j; {
-		area := min(height[i], height[j]) * (j - i)
-		maxArea = max(maxArea, area)
-		// 证明遍历到了最大值：
-		// 1.令v[i, j] 表示以i，j范围的面积；
-		// 2.当 height[i] < height[j]时，i++，遍历v[i+1, j]。
-		//   也就是说忽略了v[i, j-1], v[i, j-2]...的情况，
-		//   而被忽略的情况由于底是小于(j-i)的，最大高度被限制为height[i]。
-		//   因此被忽略的情况不包含最大值，遍历过程中肯定遍历到了最大值
-		// 3.同理可推 height[i] >= height[j] 的情形
-		if height[i] < height[j] {
-			i++
+	l, r := 0, len(height)-1
+	for l < r {
+		h := int(math.Min(float64(height[l]), float64(height[r])))
+		area := h * (r - l)
+		if area > maxArea {
+			maxArea = area
+		}
+		if height[l] < height[r] {
+			l++
 		} else {
-			j--
+			r--
 		}
 	}
 	return maxArea
 }
 
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
+// @lc code=end

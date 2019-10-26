@@ -5,6 +5,8 @@
  */
 package leetcode
 
+import "math"
+
 // @lc code=start
 func longestPalindrome(s string) string {
 	if len(s) < 2 {
@@ -33,7 +35,7 @@ func longestPalindrome(s string) string {
 	for i := 1; i < len(buf)-1; i++ { // 每次遍历确定以i为中心的最长回文半径
 		if right > i { // 如果i在右边界内，则直接更新其p[i]值
 			j := 2*mid - i // j是i关于mid的对称点
-			p[i] = min(p[j], right-i)
+			p[i] = int(math.Min(float64(p[j]), float64(right-i)))
 		} else { // i超过了右边界，p[i]初始值为1
 			p[i] = 1
 		}
@@ -57,13 +59,6 @@ func longestPalindrome(s string) string {
 		}
 	}
 	return s[maxIdx : maxIdx+maxLen]
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
 }
 
 // @lc code=end

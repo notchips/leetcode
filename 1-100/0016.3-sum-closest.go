@@ -3,31 +3,39 @@
  *
  * [16] 3Sum Closest
  */
+package leetcode
+
+import (
+	"math"
+	"sort"
+)
+
+// @lc code=start
 func threeSumClosest(nums []int, target int) int {
-	sort.Ints(nums)
+	if len(nums) < 3 {
+		return 0
+	}
 	ans := nums[0] + nums[1] + nums[2]
-	n := len(nums)
-	for i := 0; i < n-2; i++ {
-		for lo, hi := i+1, n-1; lo < hi; {
-			sum := nums[i] + nums[lo] + nums[hi]
-			if abs(sum-target) < abs(ans-target) {
-				ans = sum
-			}
-			if sum == target {
-				break
-			} else if sum < target {
-				lo++
-			} else {
-				hi--
+	sort.Ints(nums)
+	for i := 0; i < len(nums)-2; i++ {
+		if i == 0 || nums[i] != nums[i-1] {
+			l, r := i+1, len(nums)-1
+			for l < r {
+				sum := nums[i] + nums[l] + nums[r]
+				if sum == target {
+					return target
+				} else if sum < target {
+					l++
+				} else {
+					r--
+				}
+				if math.Abs(float64(sum-target)) < math.Abs(float64(ans-target)) {
+					ans = sum
+				}
 			}
 		}
 	}
 	return ans
 }
 
-func abs(a int) int {
-	if a < 0 {
-		return -a
-	}
-	return a
-}
+// @lc code=end

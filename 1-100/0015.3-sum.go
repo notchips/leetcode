@@ -3,29 +3,36 @@
  *
  * [15] 3Sum
  */
+package leetcode
+
+import "sort"
+
+// @lc code=start
 func threeSum(nums []int) [][]int {
 	sort.Ints(nums)
 	var ans [][]int
-	n := len(nums)
-	for i := 0; i < n-2; i++ {
-		if i == 0 || (i > 0 && nums[i-1] != nums[i]) {
-			for lo, hi, toFind := i+1, n-1, -nums[i]; lo < hi; {
-				if nums[lo]+nums[hi] == toFind {
-					ans = append(ans, []int{nums[i], nums[lo], nums[hi]})
-					for lo+1 < hi && nums[lo] == nums[lo+1] {
-						lo++
+	for i := 0; i < len(nums)-2; i++ {
+		if i == 0 || nums[i] != nums[i-1] {
+			l, r := i+1, len(nums)-1
+			for l < r {
+				if nums[l]+nums[r] == -nums[i] {
+					ans = append(ans, []int{nums[i], nums[l], nums[r]})
+					for l+1 < r && nums[l+1] == nums[l] {
+						l++
 					}
-					for lo < hi-1 && nums[hi-1] == nums[hi] {
-						hi--
+					for l < r-1 && nums[r-1] == nums[r] {
+						r--
 					}
-					lo, hi = lo+1, hi-1
-				} else if nums[lo]+nums[hi] < toFind {
-					lo++
+					l, r = l+1, r-1
+				} else if nums[l]+nums[r] < -nums[i] {
+					l++
 				} else {
-					hi--
+					r--
 				}
 			}
 		}
 	}
 	return ans
 }
+
+// @lc code=end
