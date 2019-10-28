@@ -3,13 +3,18 @@
  *
  * [27] Remove Element
  */
- func removeElement(nums []int, val int) int {
-	cnt := 0
-	for i := 0; i < len(nums); i++ {
-		if nums[i] != val {
-			nums[cnt] = nums[i]
-			cnt++
+package leetcode
+
+// @lc code=start
+func removeElement(nums []int, val int) int {
+	p := 0
+	for _, num := range nums {
+		if num != val {
+			nums[p] = num
+			p++
 		}
 	}
-	return cnt
+	return p
 }
+
+// @lc code=end

@@ -3,6 +3,9 @@
  *
  * [25] Reverse Nodes in k-Group
  */
+package leetcode
+
+// @lc code=start
 /**
  * Definition for singly-linked list.
  * type ListNode struct {
@@ -10,16 +13,30 @@
  *     Next *ListNode
  * }
  */
- func reverseKGroup(head *ListNode, k int) *ListNode {
-	nodes := make([]*ListNode, 0, k)
-	for temp, i := head, 0; temp != nil && i < k; i++ {
-		nodes = append(nodes, temp)
-		temp = temp.Next
+func reverseKGroup(head *ListNode, k int) *ListNode {
+	if k <= 1 {
+		return head
 	}
-	if len(nodes) < k { return head }
-	nodes[0].Next = reverseKGroup(nodes[k-1].Next, k)
-	for i := k - 1; i > 0; i-- {
-		nodes[i].Next = nodes[i-1]
+	headNode := new(ListNode) // 带头结点链表
+	preNode := headNode       // 前k个结点的最后一个结点，即当前k个结点的前置结点
+	for {
+		first := head
+		cnt := k
+		for head != nil && cnt > 0 {
+			head = head.Next
+			cnt--
+		}
+		if cnt > 0 { // 当前区间不满k个，跳出循环
+			preNode.Next = first
+			break
+		}
+		// 将[first, head)区间的结点，按头插法插入到preNode后
+		for cur := first; cur != head; {
+			preNode.Next, cur.Next, cur = cur, preNode.Next, cur.Next
+		}
+		preNode = first
 	}
-	return nodes[k-1]
+	return headNode.Next
 }
+
+// @lc code=end

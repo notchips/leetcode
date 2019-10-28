@@ -3,13 +3,18 @@
  *
  * [26] Remove Duplicates from Sorted Array
  */
+package leetcode
+
+// @lc code=start
 func removeDuplicates(nums []int) int {
-	pos := 0
-	for i, num := range nums {
-		if i == 0 || num != nums[pos-1] {
-			nums[pos] = num
-			pos++
+	p := 0
+	for i := 0; i < len(nums); i++ {
+		if i == 0 || nums[i] != nums[i-1] {
+			nums[p] = nums[i]
+			p++
 		}
 	}
-	return pos
+	return p
 }
+
+// @lc code=end

@@ -3,28 +3,31 @@
  *
  * [22] Generate Parentheses
  */
- func generateParenthesis(n int) []string {
+package leetcode
+
+// @lc code=start
+func generateParenthesis(n int) []string {
 	ans := make([]string, 0, 20)
 	buf := make([]byte, 0, 2*n)
-	dfs(&ans, &buf, 0, 0, n)
+	dfs22(&ans, &buf, n, n)
 	return ans
 }
 
-// cnt1: count of '('
-// cnt2: count of ')'
-func dfs(ans *[]string, buf *[]byte, cnt1, cnt2, n int) {
-	if len(*buf) == 2*n {
+func dfs22(ans *[]string, buf *[]byte, l, r int) {
+	if len(*buf) == cap(*buf) {
 		*ans = append(*ans, string(*buf))
 		return
 	}
-	if cnt1 < n {
+	if l > 0 {
 		*buf = append(*buf, '(')
-		dfs(ans, buf, cnt1+1, cnt2, n)
+		dfs22(ans, buf, l-1, r)
 		*buf = (*buf)[:len(*buf)-1]
 	}
-	if cnt2 < cnt1 {
+	if r > 0 && r > l {
 		*buf = append(*buf, ')')
-		dfs(ans, buf, cnt1, cnt2+1, n)
+		dfs22(ans, buf, l, r-1)
 		*buf = (*buf)[:len(*buf)-1]
 	}
 }
+
+// @lc code=end

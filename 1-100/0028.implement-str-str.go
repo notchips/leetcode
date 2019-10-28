@@ -3,7 +3,10 @@
  *
  * [28] Implement strStr()
  */
- func strStr(haystack string, needle string) int {
+package leetcode
+
+// @lc code=start
+func strStr(haystack string, needle string) int {
 	next := getNext(needle)
 	i, j := 0, 0
 	for i < len(haystack) && j < len(needle) {
@@ -32,3 +35,5 @@ func getNext(needle string) []int {
 	}
 	return next
 }
+
+// @lc code=end
