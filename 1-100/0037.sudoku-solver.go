@@ -3,37 +3,42 @@
  *
  * [37] Sudoku Solver
  */
+package leetcode
+
+// @lc code=start
 func solveSudoku(board [][]byte) {
-	var columns, rows, squares [9][9]bool // record filled nums
+	var rows, columns, squares [9][9]bool
 	for row := 0; row < 9; row++ {
 		for col := 0; col < 9; col++ {
 			if board[row][col] != '.' {
-				num := board[row][col] - '0' - 1
-				columns[col][num], rows[row][num], squares[row/3*3+col/3][num] = true, true, true
+				id := int(board[row][col] - '0' - 1)
+				rows[row][id], columns[col][id], squares[row/3*3+col/3][id] = true, true, true
 			}
 		}
 	}
-	finish := false
-	fill(board, &columns, &rows, &squares, &finish)
+	filled := false
+	fillBoard(board, &rows, &columns, &squares, &filled)
 }
 
-func fill(board [][]byte, columns, rows, squares *[9][9]bool, finish *bool) {
+func fillBoard(board [][]byte, rows, columns, squares *[9][9]bool, filled *bool) {
 	for row := 0; row < 9; row++ {
 		for col := 0; col < 9; col++ {
 			if board[row][col] == '.' {
-				for num := 0; num < 9; num++ {
-					if !columns[col][num] && !rows[row][num] && !squares[row/3*3+col/3][num] {
-						board[row][col] = byte(num) + 1 + '0'
-						columns[col][num], rows[row][num], squares[row/3*3+col/3][num] = true, true, true
-						fill(board, columns, rows, squares, finish)
-						if *finish { return }
+				for id := 0; id < 9; id++ {
+					if !rows[row][id] && !columns[col][id] && !squares[row/3*3+col/3][id] {
+						rows[row][id], columns[col][id], squares[row/3*3+col/3][id] = true, true, true
+						board[row][col] = byte(id + 1 + '0')
+						fillBoard(board, rows, columns, squares, filled)
+						if *filled == true { return } // 填写正确，终止所有递归栈
 						board[row][col] = '.'
-						columns[col][num], rows[row][num], squares[row/3*3+col/3][num] = false, false, false
+						rows[row][id], columns[col][id], squares[row/3*3+col/3][id] = false, false, false
 					}
 				}
-				return // fill wrong
+				return // 填写错误
 			}
 		}
 	}
-	*finish = true // fill right
+	*filled = true // 填写正确
 }
+
+// @lc code=end

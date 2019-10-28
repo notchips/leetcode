@@ -3,34 +3,40 @@
  *
  * [33] Search in Rotated Sorted Array
  */
+package leetcode
+
+// @lc code=start
 func search(nums []int, target int) int {
-	for left, right := 0, len(nums)-1; left <= right; {
-		mid := (left + right) / 2
-		if nums[left] <= nums[mid] { // 左半有序
-			if target >= nums[left] && target <= nums[mid] {
-				return binarySearch(nums, target, left, mid)
+	l, r := 0, len(nums)-1
+	for l <= r {
+		m := (l + r) / 2
+		if nums[m] <= nums[r] { // 右边有序
+			if nums[m] <= target && target <= nums[r] {
+				return binarySearch(nums, m, r, target)
 			}
-			left = mid + 1
-		} else { // 右半有序
-			if target >= nums[mid] && target <= nums[right] {
-				return binarySearch(nums, target, mid, right)
+			r = m - 1
+		} else { // 左边有序
+			if nums[l] <= target && target <= nums[m] {
+				return binarySearch(nums, l, m, target)
 			}
-			right = mid - 1
+			l = m + 1
 		}
 	}
 	return -1
 }
 
-func binarySearch(nums []int, target, left, right int) int {
-	for left <= right {
-		mid := (left + right) / 2
-		if target == nums[mid] {
-			return mid
-		} else if target < nums[mid] {
-			right = mid - 1
+func binarySearch(nums []int, l, r, target int) int {
+	for l <= r {
+		m := (l + r) / 2
+		if nums[m] == target {
+			return m
+		} else if nums[m] < target {
+			l = m + 1
 		} else {
-			left = mid + 1
+			r = m - 1
 		}
 	}
 	return -1
 }
+
+// @lc code=end

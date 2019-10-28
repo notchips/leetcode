@@ -3,25 +3,30 @@
  *
  * [39] Combination Sum
  */
+package leetcode
+
+// @lc code=start
 func combinationSum(candidates []int, target int) [][]int {
-	ans := make([][]int, 0, 10)
-	buf := make([]int, 0, 10)
-	dfs(candidates, target, 0, 0, &ans, &buf)
+	var ans [][]int
+	var buf []int
+	dfs39(candidates, target, &ans, &buf)
 	return ans
 }
 
-func dfs(candidates []int, target, sum, i int, ans *[][]int, buf *[]int) {
-	if target == sum && len(*buf) != 0 {
+func dfs39(candidates []int, target int, ans *[][]int, buf *[]int) {
+	if target == 0 {
 		newBuf := make([]int, len(*buf))
 		copy(newBuf, *buf)
 		*ans = append(*ans, newBuf)
 		return
 	}
-	if sum > target || i >= len(candidates) {
+	if target < 0 || len(candidates) == 0 {
 		return
 	}
-	*buf = append(*buf, candidates[i])
-	dfs(candidates, target, sum+candidates[i], i, ans, buf)
+	*buf = append(*buf, candidates[0])
+	dfs39(candidates, target-candidates[0], ans, buf)
 	*buf = (*buf)[:len(*buf)-1]
-	dfs(candidates, target, sum, i+1, ans, buf)
+	dfs39(candidates[1:], target, ans, buf)
 }
+
+// @lc code=end

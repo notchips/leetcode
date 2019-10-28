@@ -3,44 +3,47 @@
  *
  * [34] Find First and Last Position of Element in Sorted Array
  */
+package leetcode
+
+// @lc code=start
 func searchRange(nums []int, target int) []int {
-	ans := []int{-1, -1}
-	left, right := 0, len(nums)-1
-	for left <= right {
-		mid := left + (right-left)/2
-		if nums[mid] == target {
-			ans[0] = firstEqual(nums, target, left, mid)
-			ans[1] = lastEqual(nums, target, mid, right)
-			break
-		} else if nums[mid] > target {
-			right = mid - 1
-		} else {
-			left = mid + 1
-		}
+	if len(nums) == 0 {
+		return []int{-1, -1}
 	}
-	return ans
+	return []int{findFirstIndex(nums, target), findLastIndex(nums, target)}
 }
 
-func firstEqual(nums []int, target, left, right int) int {
-	for left < right {
-		mid := left + (right-left)/2
-		if nums[mid] < target {
-			left = mid + 1
+func findFirstIndex(nums []int, target int) int {
+	l, r := 0, len(nums)-1
+	for l < r {
+		m := (l + r) / 2
+		if nums[m] < target {
+			l = m + 1
 		} else {
-			right = mid
+			r = m
 		}
 	}
-	return left
+	if nums[l] == target {
+		return l
+	}
+	return -1
 }
 
-func lastEqual(nums []int, target, left, right int) int {
-	for left < right {
-		mid := left + (right-left)/2 + 1
-		if nums[mid] > target {
-			right = mid - 1
+func findLastIndex(nums []int, target int) int {
+	l, r := 0, len(nums)-1
+	for l < r {
+		m := (l+r)/2 + 1
+		if nums[m] > target {
+			r = m - 1
 		} else {
-			left = mid
+			l = m
 		}
 	}
-	return left
+	if nums[l] == target {
+		return l
+	}
+	return -1
+
 }
+
+// @lc code=end

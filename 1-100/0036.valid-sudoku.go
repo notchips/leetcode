@@ -3,18 +3,23 @@
  *
  * [36] Valid Sudoku
  */
+package leetcode
+
+// @lc code=start
 func isValidSudoku(board [][]byte) bool {
-	var columns, rows, squares [9][9]bool // record filled nums
+	var rows, columns, squares [9][9]bool // record filled nums
 	for row := 0; row < 9; row++ {
 		for col := 0; col < 9; col++ {
 			if board[row][col] != '.' {
-				num := board[row][col] - '0' - 1
-				if columns[col][num] || rows[row][num] || squares[row/3*3+col/3][num] {
+				id := int(board[row][col] - '0' - 1)
+				if rows[row][id] || columns[col][id] || squares[row/3*3+col/3][id] {
 					return false
 				}
-				columns[col][num], rows[row][num], squares[row/3*3+col/3][num] = true, true, true
+				rows[row][id], columns[col][id], squares[row/3*3+col/3][id] = true, true, true
 			}
 		}
 	}
 	return true
 }
+
+// @lc code=end

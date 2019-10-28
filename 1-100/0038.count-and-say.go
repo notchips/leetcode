@@ -3,13 +3,16 @@
  *
  * [38] Count and Say
  */
+package leetcode
+
+// @lc code=start
 func countAndSay(n int) string {
 	say := []byte{'1'}
-	for ; n > 1; n-- {
-		var newSay []byte
-		for i, cnt := 0, 1; i < len(say); i, cnt = i+1, cnt+1 {
-			if i == len(say)-1 || say[i] != say[i+1] {
-				newSay = append(append(newSay, strconv.Itoa(cnt)...), say[i])
+	for i := 1; i < n; i++ {
+		newSay := make([]byte, 0, len(say))
+		for j, cnt := 0, 1; j < len(say); j, cnt = j+1, cnt+1 {
+			if j == len(say)-1 || say[j] != say[j+1] {
+				newSay = append(newSay, byte(cnt+'0'), say[j])
 				cnt = 0
 			}
 		}
@@ -17,3 +20,5 @@ func countAndSay(n int) string {
 	}
 	return string(say)
 }
+
+// @lc code=end
