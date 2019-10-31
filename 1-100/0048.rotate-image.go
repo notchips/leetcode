@@ -3,13 +3,18 @@
  *
  * [48] Rotate Image
  */
+package leetcode
+
+// @lc code=start
 func rotate(matrix [][]int) {
-	n := len(matrix)
-	for i := 0; i < n/2; i++ {
-		for j := i; j < n-1-i; j++ {
-			matrix[i][j], matrix[n-1-j][i] = matrix[n-1-j][i], matrix[i][j]
-			matrix[n-1-j][i], matrix[n-1-i][n-1-j] = matrix[n-1-i][n-1-j], matrix[n-1-j][i]
-			matrix[n-1-i][n-1-j], matrix[j][n-1-i] = matrix[j][n-1-i], matrix[n-1-i][n-1-j]
+	for start, end := 0, len(matrix)-1; start < end; start, end = start+1, end-1 {
+		for i := start; i < end; i++ {
+			matrix[i][start], matrix[end][i] = matrix[end][i], matrix[i][start]
+			j := start + end - i
+			matrix[end][i], matrix[j][end] = matrix[j][end], matrix[end][i]
+			matrix[j][end], matrix[start][j] = matrix[start][j], matrix[j][end]
 		}
 	}
 }
+
+// @lc code=end

@@ -3,6 +3,9 @@
  *
  * [44] Wildcard Matching
  */
+package leetcode
+
+// @lc code=start
 func isMatch(s string, p string) bool {
 	s, p = " "+s, " "+p
 	m, n := len(p), len(s)
@@ -18,12 +21,14 @@ func isMatch(s string, p string) bool {
 	}
 	for i := 1; i < m; i++ {
 		for j := 1; j < n; j++ {
-			if p[i] == '?' || p[i] == s[j] { // 匹配单个字符
+			if p[i] == s[j] || p[i] == '?' {
 				dp[i][j] = dp[i-1][j-1]
-			} else if p[i] == '*' { // 匹配0个 || 匹配1个 || 匹配多个
+			} else if p[i] == '*' { // 匹配0个，匹配1个，匹配多个
 				dp[i][j] = dp[i-1][j] || dp[i-1][j-1] || dp[i][j-1]
 			}
 		}
 	}
 	return dp[m-1][n-1]
 }
+
+// @lc code=end

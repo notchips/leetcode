@@ -3,31 +3,42 @@
  *
  * [47] Permutations II
  */
+package leetcode
+
+// @lc code=start
 func permuteUnique(nums []int) [][]int {
-	numCnt := make(map[int]int)
+	numMap := make(map[int]int)
 	for _, num := range nums {
-		numCnt[num]++
+		numMap[num]++
 	}
+
+	numSet := make([]int, 0, len(nums))
+	for num := range numMap {
+		numSet = append(numSet, num)
+	}
+
 	ans := make([][]int, 0, 32)
 	buf := make([]int, 0, len(nums))
-	dfs(&ans, &buf, numCnt, len(nums))
+	dfs47(&ans, &buf, numMap, numSet)
 	return ans
 }
 
-func dfs(ans *[][]int, buf *[]int, numCnt map[int]int, n int) {
-	if len(*buf) == n {
-		newBuf := make([]int, n)
+func dfs47(ans *[][]int, buf *[]int, numMap map[int]int, numSet []int) {
+	if len(*buf) == cap(*buf) {
+		newBuf := make([]int, len(*buf))
 		copy(newBuf, *buf)
 		*ans = append(*ans, newBuf)
 		return
 	}
-	for num := range numCnt {
-		if numCnt[num] > 0 {
+	for _, num := range numSet {
+		if numMap[num] > 0 {
 			*buf = append(*buf, num)
-			numCnt[num]--
-			dfs(ans, buf, numCnt, n)
-			numCnt[num]++
+			numMap[num]--
+			dfs47(ans, buf, numMap, numSet)
+			numMap[num]++
 			*buf = (*buf)[:len(*buf)-1]
 		}
 	}
 }
+
+// @lc code=end

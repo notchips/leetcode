@@ -3,18 +3,22 @@
  *
  * [41] First Missing Positive
  */
+package leetcode
+
+// @lc code=start
 func firstMissingPositive(nums []int) int {
-	nums = append(nums, -1)
-	n := len(nums)
-	for i := 0; i < n; i++ {
-		for 0 <= nums[i] && nums[i] < n && nums[i] != nums[nums[i]] {
-			nums[i], nums[nums[i]] = nums[nums[i]], nums[i]
+	for i := 0; i < len(nums); i++ {
+		for 0 <= nums[i]-1 && nums[i]-1 < len(nums) &&
+			nums[i] != nums[nums[i]-1] {
+			nums[i], nums[nums[i]-1] = nums[nums[i]-1], nums[i]
 		}
 	}
-	for i := 1; i < n; i++ {
-		if nums[i] != i {
-			return i
+	for i := 0; i < len(nums); i++ {
+		if nums[i]-1 != i {
+			return i + 1
 		}
 	}
-	return n
+	return len(nums) + 1
 }
+
+// @lc code=end

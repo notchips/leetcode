@@ -3,26 +3,32 @@
  *
  * [49] Group Anagrams
  */
- type key [26]int
+package leetcode
 
- func groupAnagrams(strs []string) [][]string {
-	 m := make(map[key][]string)
-	 for _, s := range strs {
-		 k := getKey(s)
-		 m[*k] = append(m[*k], s)
-	 }
-	 ans := make([][]string, 0, len(m))
-	 for _, v := range m {
-		 ans = append(ans, v)
-	 }
-	 return ans
- }
- 
- func getKey(s string) *key {
-	 var k key
-	 for _, c := range s {
-		 k[c-'a']++
-	 }
-	 return &k
- }
- 
+// @lc code=start
+func groupAnagrams(strs []string) [][]string {
+	strMap := make(map[[26]int][]string)
+	var key [26]int
+	for _, str := range strs {
+		// reset key
+		for i := range key {
+			key[i] = 0
+		}
+
+		// set key
+		for i := 0; i < len(str); i++ {
+			key[int(str[i]-'a')]++
+		}
+
+		// add to map
+		strMap[key] = append(strMap[key], str)
+	}
+
+	ans := make([][]string, 0, len(strMap))
+	for _, v := range strMap {
+		ans = append(ans, v)
+	}
+	return ans
+}
+
+// @lc code=end
