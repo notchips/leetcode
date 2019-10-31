@@ -9,11 +9,11 @@ package leetcode
 func combinationSum(candidates []int, target int) [][]int {
 	var ans [][]int
 	var buf []int
-	dfs39(candidates, target, &ans, &buf)
+	dfs(candidates, target, &ans, &buf)
 	return ans
 }
 
-func dfs39(candidates []int, target int, ans *[][]int, buf *[]int) {
+func dfs(candidates []int, target int, ans *[][]int, buf *[]int) {
 	if target == 0 {
 		newBuf := make([]int, len(*buf))
 		copy(newBuf, *buf)
@@ -24,9 +24,9 @@ func dfs39(candidates []int, target int, ans *[][]int, buf *[]int) {
 		return
 	}
 	*buf = append(*buf, candidates[0])
-	dfs39(candidates, target-candidates[0], ans, buf)
+	dfs(candidates, target-candidates[0], ans, buf)
 	*buf = (*buf)[:len(*buf)-1]
-	dfs39(candidates[1:], target, ans, buf)
+	dfs(candidates[1:], target, ans, buf)
 }
 
 // @lc code=end

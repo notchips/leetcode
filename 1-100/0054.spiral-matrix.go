@@ -3,44 +3,40 @@
  *
  * [54] Spiral Matrix
  */
+package leetcode
+
+// @lc code=start
 func spiralOrder(matrix [][]int) []int {
 	if len(matrix) == 0 || len(matrix[0]) == 0 {
-		return []int{}
+		return nil
 	}
 	m, n := len(matrix), len(matrix[0])
 	ans := make([]int, 0, m*n)
-	travelEdge(&ans, matrix)
+	rowStart, colStart := 0, 0
+	rowEnd, colEnd := m-1, n-1
+	for rowStart <= rowEnd && colStart <= colEnd {
+		for col := colStart; col <= colEnd; col++ {
+			ans = append(ans, matrix[rowStart][col])
+		}
+		for row := rowStart + 1; row < rowEnd; row++ {
+			ans = append(ans, matrix[row][colEnd])
+		}
+		if rowStart < rowEnd {
+			for col := colEnd; col >= colStart; col-- {
+				ans = append(ans, matrix[rowEnd][col])
+			}
+		}
+		if colStart < colEnd {
+			for row := rowEnd - 1; row > rowStart; row-- {
+				ans = append(ans, matrix[row][colStart])
+			}
+		}
+		rowStart++
+		colStart++
+		rowEnd--
+		colEnd--
+	}
 	return ans
 }
 
-func travelEdge(ans *[]int, matrix [][]int) {
-	m, n := len(matrix), len(matrix[0])
-	// 从左往右，遍历上行
-	for i := 0; i < n; i++ {
-		*ans = append(*ans, matrix[0][i])
-	}
-	// 从上往下，遍历右列
-	for j := 1; j < m-1; j++ {
-		*ans = append(*ans, matrix[j][n-1])
-	}
-	// 从右往左，遍历下行
-	if m > 1 {
-		for i := n - 1; i >= 0; i-- {
-			*ans = append(*ans, matrix[m-1][i])
-		}
-	}
-	// 从下往上，遍历左列
-	if n > 1 {
-		for j := m - 2; j >= 1; j-- {
-			*ans = append(*ans, matrix[j][0])
-		}
-	}
-	// 内部还存在数字
-	if m > 2 && n > 2 {
-		matrix = matrix[1 : m-1]
-		for i := range matrix {
-			matrix[i] = matrix[i][1 : n-1]
-		}
-		travelEdge(ans, matrix)
-	}
-}
+// @lc code=end

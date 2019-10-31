@@ -6,7 +6,6 @@
 package leetcode
 
 import (
-	"math"
 	"sort"
 )
 
@@ -29,13 +28,20 @@ func threeSumClosest(nums []int, target int) int {
 				} else {
 					r--
 				}
-				if math.Abs(float64(sum-target)) < math.Abs(float64(ans-target)) {
+				if abs(sum-target) < abs(ans-target) {
 					ans = sum
 				}
 			}
 		}
 	}
 	return ans
+}
+
+func abs(i int) int {
+	if i < 0 {
+		return -i
+	}
+	return i
 }
 
 // @lc code=end

@@ -23,7 +23,7 @@ func multiplySingle(num []byte, d byte) []byte {
 	buf := append([]byte{'0'}, num...)
 	carry := 0
 	for i := len(buf) - 1; i > 0; i-- {
-		product := charToInt(buf[i])*charToInt(d) + carry
+		product := byteToInt(buf[i])*byteToInt(d) + carry
 		buf[i], carry = intToByte(product%10), product/10
 	}
 	buf[0] = intToByte(carry)
@@ -38,11 +38,11 @@ func add(num1, num2 []byte) []byte {
 	carry := 0
 	for i, j := len(buf)-1, len(num2)-1; i > 0; i-- {
 		if j >= 0 {
-			sum := charToInt(buf[i]) + charToInt(num2[j]) + carry
+			sum := byteToInt(buf[i]) + byteToInt(num2[j]) + carry
 			buf[i], carry = intToByte(sum%10), sum/10
 			j--
 		} else if carry > 0 {
-			sum := charToInt(buf[i]) + carry
+			sum := byteToInt(buf[i]) + carry
 			buf[i], carry = intToByte(sum%10), sum/10
 		}
 	}
@@ -50,7 +50,7 @@ func add(num1, num2 []byte) []byte {
 	return removeLeadingZero(buf)
 }
 
-func charToInt(c byte) int {
+func byteToInt(c byte) int {
 	return int(c - '0')
 }
 

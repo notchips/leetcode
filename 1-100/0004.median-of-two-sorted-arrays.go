@@ -33,13 +33,7 @@ func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 			break
 		}
 	}
-	if leftVal2 > leftVal1 {
-		leftVal1 = leftVal2
-	}
-	if rightVal2 < rightVal1 {
-		rightVal1 = rightVal2
-	}
-	return float64(leftVal1+rightVal1) / 2
+	return float64(max(leftVal1, leftVal2)+min(rightVal1, rightVal2)) / 2
 }
 
 // 返回切点的左右值
@@ -56,6 +50,20 @@ func getLeftAndRightValueAtPos(nums []int, pos int) (int, int) {
 	default:
 		return nums[(pos-1)/2], nums[pos/2]
 	}
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
 }
 
 // @lc code=end

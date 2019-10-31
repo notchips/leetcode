@@ -17,11 +17,11 @@ func combinationSum2(candidates []int, target int) [][]int {
 	}
 	var ans [][]int
 	var buf []int
-	dfs40(numMap, numSet, target, &ans, &buf)
+	dfs(numMap, numSet, target, &ans, &buf)
 	return ans
 }
 
-func dfs40(numMap map[int]int, numSet []int, target int, ans *[][]int, buf *[]int) {
+func dfs(numMap map[int]int, numSet []int, target int, ans *[][]int, buf *[]int) {
 	if target == 0 {
 		newBuf := make([]int, len(*buf))
 		copy(newBuf, *buf)
@@ -34,11 +34,11 @@ func dfs40(numMap map[int]int, numSet []int, target int, ans *[][]int, buf *[]in
 	if num := numSet[0]; numMap[num] > 0 {
 		*buf = append(*buf, num)
 		numMap[num]--
-		dfs40(numMap, numSet, target-num, ans, buf)
+		dfs(numMap, numSet, target-num, ans, buf)
 		numMap[num]++
 		*buf = (*buf)[:len(*buf)-1]
 	}
-	dfs40(numMap, numSet[1:], target, ans, buf)
+	dfs(numMap, numSet[1:], target, ans, buf)
 }
 
 // @lc code=end

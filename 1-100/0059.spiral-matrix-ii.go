@@ -3,6 +3,9 @@
  *
  * [59] Spiral Matrix II
  */
+package leetcode
+
+// @lc code=start
 func generateMatrix(n int) [][]int {
 	matrix := make([][]int, n)
 	for i := range matrix {
@@ -17,17 +20,19 @@ func generateMatrix(n int) [][]int {
 		for col := start; col <= end; col++ {
 			matrix[start][col] = iota()
 		}
-		for row := start + 1; row <= end-1; row++ {
+		for row := start + 1; row < end; row++ {
 			matrix[row][end] = iota()
 		}
 		if start < end {
 			for col := end; col >= start; col-- {
 				matrix[end][col] = iota()
 			}
-			for row := end - 1; row >= start+1; row-- {
+			for row := end - 1; row > start; row-- {
 				matrix[row][start] = iota()
 			}
 		}
 	}
 	return matrix
 }
+
+// @lc code=end

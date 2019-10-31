@@ -3,12 +3,22 @@
  *
  * [58] Length of Last Word
  */
+package leetcode
+
+// @lc code=start
 func lengthOfLastWord(s string) int {
-	s = strings.TrimSpace(s)
-	words := strings.Split(s, " ")
-	n := len(words)
-	if n == 0 {
-		return 0
+	length := 0
+	meetWord := false
+	for i := len(s) - 1; i >= 0; i-- {
+		if meetWord && s[i] == ' ' {
+			break
+		}
+		if s[i] != ' ' {
+			length++
+			meetWord = true
+		}
 	}
-	return len(words[n-1])
+	return length
 }
+
+// @lc code=end

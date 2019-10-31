@@ -18,11 +18,11 @@ func letterCombinations(digits string) []string {
 	hash := []string{"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"}
 	ans := make([]string, 0, 20)
 	buf := make([]byte, 0, len(digits))
-	dfs17(digits, hash, &ans, &buf)
+	dfs(digits, hash, &ans, &buf)
 	return ans
 }
 
-func dfs17(digits string, hash []string, ans *[]string, buf *[]byte) {
+func dfs(digits string, hash []string, ans *[]string, buf *[]byte) {
 	if len(digits) == 0 {
 		*ans = append(*ans, string(*buf))
 		return
@@ -30,7 +30,7 @@ func dfs17(digits string, hash []string, ans *[]string, buf *[]byte) {
 	d := int(digits[0] - '0')
 	for i := 0; i < len(hash[d]); i++ {
 		*buf = append(*buf, hash[d][i])
-		dfs17(digits[1:], hash, ans, buf)
+		dfs(digits[1:], hash, ans, buf)
 		*buf = (*buf)[:len(*buf)-1]
 	}
 }

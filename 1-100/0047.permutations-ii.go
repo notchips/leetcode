@@ -19,11 +19,11 @@ func permuteUnique(nums []int) [][]int {
 
 	ans := make([][]int, 0, 32)
 	buf := make([]int, 0, len(nums))
-	dfs47(&ans, &buf, numMap, numSet)
+	dfs(&ans, &buf, numMap, numSet)
 	return ans
 }
 
-func dfs47(ans *[][]int, buf *[]int, numMap map[int]int, numSet []int) {
+func dfs(ans *[][]int, buf *[]int, numMap map[int]int, numSet []int) {
 	if len(*buf) == cap(*buf) {
 		newBuf := make([]int, len(*buf))
 		copy(newBuf, *buf)
@@ -34,7 +34,7 @@ func dfs47(ans *[][]int, buf *[]int, numMap map[int]int, numSet []int) {
 		if numMap[num] > 0 {
 			*buf = append(*buf, num)
 			numMap[num]--
-			dfs47(ans, buf, numMap, numSet)
+			dfs(ans, buf, numMap, numSet)
 			numMap[num]++
 			*buf = (*buf)[:len(*buf)-1]
 		}

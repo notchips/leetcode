@@ -3,27 +3,45 @@
  *
  * [57] Insert Interval
  */
+package leetcode
+
+// @lc code=start
 func insert(intervals [][]int, newInterval []int) [][]int {
-	if len(intervals) == 0 && len(newInterval) == 0 {
-		return [][]int{}
-	}
 	ans := make([][]int, 0, len(intervals))
+	inserted := false
 	for _, interval := range intervals {
-		// newInterval在interval的前面或者后面
-		if newInterval[1] < interval[0] || interval[1] < newInterval[0] {
+		if !inserted {
+			if newInterval[1] < interval[0] {
+				ans = append(ans, newInterval, interval)
+				inserted = true
+			} else if interval[1] < newInterval[0] {
+				ans = append(ans, interval)
+			} else {
+				newInterval[0] = min(newInterval[0], interval[0])
+				newInterval[1] = max(newInterval[1], interval[1])
+			}
+		} else {
 			ans = append(ans, interval)
-		} else { // newInterval和interval相交
-			if interval[0] < newInterval[0] {
-				newInterval[0] = interval[0]
-			}
-			if interval[1] > newInterval[1] {
-				newInterval[1] = interval[1]
-			}
 		}
 	}
-	ans = append(ans, newInterval)
-	sort.Slice(ans, func(i, j int) bool {
-		return ans[i][0] < ans[j][0]
-	})
+	if !inserted {
+		ans = append(ans, newInterval)
+	}
 	return ans
 }
+
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
+}
+
+// @lc code=end

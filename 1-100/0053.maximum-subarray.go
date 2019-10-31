@@ -3,13 +3,18 @@
  *
  * [53] Maximum Subarray
  */
+package leetcode
+
+import "math"
+
+// @lc code=start
 func maxSubArray(nums []int) int {
-	maxSum, sum := nums[0], nums[0]
-	for i := 1; i < len(nums); i++ {
+	maxSum, sum := math.MinInt64, 0
+	for _, num := range nums {
 		if sum > 0 {
-			sum += nums[i]
+			sum += num
 		} else {
-			sum = nums[i]
+			sum = num
 		}
 		if sum > maxSum {
 			maxSum = sum
@@ -17,3 +22,5 @@ func maxSubArray(nums []int) int {
 	}
 	return maxSum
 }
+
+// @lc code=end

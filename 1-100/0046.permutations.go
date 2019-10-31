@@ -13,11 +13,11 @@ func permute(nums []int) [][]int {
 	ans := make([][]int, 0, 32)
 	buf := make([]int, 0, len(nums))
 	vis := make([]bool, len(nums))
-	dfs46(&ans, &buf, vis, nums)
+	dfs(&ans, &buf, vis, nums)
 	return ans
 }
 
-func dfs46(ans *[][]int, buf *[]int, vis []bool, nums []int) {
+func dfs(ans *[][]int, buf *[]int, vis []bool, nums []int) {
 	if len(*buf) == cap(*buf) {
 		newBuf := make([]int, len(*buf))
 		copy(newBuf, *buf)
@@ -28,7 +28,7 @@ func dfs46(ans *[][]int, buf *[]int, vis []bool, nums []int) {
 		if !vis[i] {
 			*buf = append(*buf, nums[i])
 			vis[i] = true
-			dfs46(ans, buf, vis, nums)
+			dfs(ans, buf, vis, nums)
 			vis[i] = false
 			*buf = (*buf)[:len(*buf)-1]
 		}

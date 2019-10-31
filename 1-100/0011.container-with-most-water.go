@@ -5,8 +5,6 @@
  */
 package leetcode
 
-import "math"
-
 // 证明遍历到了最大值：
 // 1.令v[l, r] 表示以l，r范围的面积；
 // 2.当 height[r] < height[r]时，l++，遍历v[l+1, j]。
@@ -19,7 +17,7 @@ func maxArea(height []int) int {
 	maxArea := 0
 	l, r := 0, len(height)-1
 	for l < r {
-		h := int(math.Min(float64(height[l]), float64(height[r])))
+		h := min(height[l], height[r])
 		area := h * (r - l)
 		if area > maxArea {
 			maxArea = area
@@ -31,6 +29,13 @@ func maxArea(height []int) int {
 		}
 	}
 	return maxArea
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
 }
 
 // @lc code=end

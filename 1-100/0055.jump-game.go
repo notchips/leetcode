@@ -3,14 +3,18 @@
  *
  * [55] Jump Game
  */
+package leetcode
+
+// @lc code=start
 func canJump(nums []int) bool {
-	for start, end := 0, len(nums)-1; start != end && start+nums[start] < end; {
+	start, end := 0, len(nums)-1
+	for start+nums[start] < end {
 		if nums[start] == 0 {
 			return false
 		}
 		bestNext := start + 1
 		for next := start + 2; next <= start+nums[start]; next++ {
-			if next-bestNext+nums[next] >= nums[bestNext] {
+			if nums[next]+next > nums[bestNext]+bestNext {
 				bestNext = next
 			}
 		}
@@ -18,3 +22,5 @@ func canJump(nums []int) bool {
 	}
 	return true
 }
+
+// @lc code=end
