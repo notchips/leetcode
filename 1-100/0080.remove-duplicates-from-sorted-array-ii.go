@@ -3,6 +3,9 @@
  *
  * [80] Remove Duplicates from Sorted Array II
  */
+package leetcode
+
+// @lc code=start
 func removeDuplicates(nums []int) int {
 	pos := 0
 	for _, num := range nums {
@@ -13,3 +16,5 @@ func removeDuplicates(nums []int) int {
 	}
 	return pos
 }
+
+// @lc code=end

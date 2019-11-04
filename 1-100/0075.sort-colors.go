@@ -3,6 +3,9 @@
  *
  * [75] Sort Colors
  */
+package leetcode
+
+// @lc code=start
 // i 记录 0 的个数， 同时写入0，会覆盖之前的1或2
 // j 记录 0 和 1 的个数，同时写入1，会覆盖之前的2
 // k 记录 0，1，2 的个数，同时写入2
@@ -26,3 +29,5 @@ func sortColors(nums []int) {
 		}
 	}
 }
+
+// @lc code=end

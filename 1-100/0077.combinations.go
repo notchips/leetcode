@@ -3,6 +3,9 @@
  *
  * [77] Combinations
  */
+package leetcode
+
+// @lc code=start
 func combine(n int, k int) [][]int {
 	ans := make([][]int, 0, 32)
 	buf := make([]int, 0, k)
@@ -10,18 +13,18 @@ func combine(n int, k int) [][]int {
 	return ans
 }
 
-func dfs(ans *[][]int, buf *[]int, i, n, k int) {
+func dfs(ans *[][]int, buf *[]int, m, n, k int) {
 	if len(*buf) == k {
-		newBuf := make([]int, k)
+		newBuf := make([]int, len(*buf))
 		copy(newBuf, *buf)
 		*ans = append(*ans, newBuf)
 		return
 	}
-	if i > n {
-		return
+	for i := m; i <= n; i++ {
+		*buf = append(*buf, i)
+		dfs(ans, buf, i+1, n, k)
+		*buf = (*buf)[:len(*buf)-1]
 	}
-	*buf = append(*buf, i)
-	dfs(ans, buf, i+1, n, k)
-	*buf = (*buf)[:len(*buf)-1]
-	dfs(ans, buf, i+1, n, k)
 }
+
+// @lc code=end

@@ -3,42 +3,54 @@
  *
  * [76] Minimum Window Substring
  */
+package leetcode
+
+import (
+	"math"
+)
+
+// @lc code=start
 func minWindow(s string, t string) string {
-	hashT := make([]int, 128)
+	if len(s) == 0 || len(t) == 0 {
+		return ""
+	}
+
+	var charMap [256]int // charMap记录t中字符出现的次数
 	for i := 0; i < len(t); i++ {
-		hashT[t[i]]++
+		charMap[t[i]]++
 	}
-	indexes := make([]int, 0, len(s))
-	for i := 0; i < len(s); i++ {
-		if hashT[s[i]] > 0 {
-			indexes = append(indexes, i)
-		}
-	}
-	hashS := make([]int, 128)
-	var minLeft, minRight int
-	minLen := math.MaxInt64
+
+	minLen, minIdx := math.MaxInt64, 0
+	var curMap [256]int // curMap记录遍历过程中，存在于t中的字符的次数
 	cnt := 0
-	for curLeft, curRight := 0, 0; curRight < len(indexes); curRight++ {
-		leftChar, rightChar := s[indexes[curLeft]], s[indexes[curRight]]
-		if hashS[rightChar] < hashT[rightChar] {
-			cnt++
-		}
-		hashS[rightChar]++
-		// 去除左边多余字符
-		for hashS[leftChar] > hashT[leftChar] {
-			hashS[leftChar]--
-			curLeft++
-			leftChar = s[indexes[curLeft]]
-		}
-		if cnt == len(t) {
-			curLen := indexes[curRight] - indexes[curLeft] + 1
-			if curLen < minLen {
-				minLen, minLeft, minRight = curLen, curLeft, curRight
+	// 双指针遍历
+	for left, right := 0, 0; right < len(s); right++ {
+		// 如果s[right]存在于t中，则记录其出现次数
+		if charMap[s[right]] > 0 {
+			curMap[s[right]]++
+			if curMap[s[right]] <= charMap[s[right]] {
+				cnt++
+			}
+			// 存在解
+			if cnt == len(t) {
+				// 移动left指针
+				for charMap[s[left]] == 0 || curMap[s[left]] > charMap[s[left]] {
+					if curMap[s[left]] > charMap[s[left]] {
+						curMap[s[left]]--
+					}
+					left++
+				}
+				if right-left+1 <= minLen {
+					minLen = right - left + 1
+					minIdx = left
+				}
 			}
 		}
 	}
 	if cnt < len(t) {
 		return ""
 	}
-	return s[indexes[minLeft] : indexes[minRight]+1]
+	return s[minIdx : minIdx+minLen]
 }
+
+// @lc code=end
