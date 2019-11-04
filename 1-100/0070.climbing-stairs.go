@@ -3,10 +3,18 @@
  *
  * [70] Climbing Stairs
  */
+package leetcode
+
+// @lc code=start
 func climbStairs(n int) int {
-	pre, post := 1, 2
-	for i := 0; i < n-1; i++ {
+	if n == 0 {
+		return 0
+	}
+	pre, post := 1, 1
+	for ; n > 0; n-- {
 		pre, post = post, pre+post
 	}
 	return pre
 }
+
+// @lc code=end

@@ -3,10 +3,16 @@
  *
  * [62] Unique Paths
  */
+package leetcode
+
+// @lc code=start
 func uniquePaths(m int, n int) int {
+	if m < 1 || n < 1 {
+		return 0
+	}
 	dp := make([][]int, m)
-	for row := range dp {
-		dp[row] = make([]int, n)
+	for i := range dp {
+		dp[i] = make([]int, n)
 	}
 	for i := 0; i < m; i++ {
 		for j := 0; j < n; j++ {
@@ -19,3 +25,5 @@ func uniquePaths(m int, n int) int {
 	}
 	return dp[m-1][n-1]
 }
+
+// @lc code=end

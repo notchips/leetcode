@@ -3,6 +3,9 @@
  *
  * [61] Rotate List
  */
+package leetcode
+
+// @lc code=start
 /**
  * Definition for singly-linked list.
  * type ListNode struct {
@@ -11,20 +14,32 @@
  * }
  */
 func rotateRight(head *ListNode, k int) *ListNode {
-	if head == nil {
-		return nil
+	// 计算链表长度，同时找到尾结点
+	var tail *ListNode
+	length := 0
+	for cur := head; cur != nil; cur = cur.Next {
+		tail = cur
+		length++
 	}
-	nodes := make([]*ListNode, 0,  16)
-	for head != nil {
-		nodes = append(nodes, head)
-		head = head.Next
+
+	if length == 0 || k%length == 0 {
+		return head
 	}
-	n := len(nodes)
-	k %= n
-	if k == 0 {
-		return nodes[0]
+
+	// 寻找新的头结点和尾结点
+	var newHead, newTail *ListNode
+	k = length - k%length
+	for cur := head; cur != nil; cur = cur.Next {
+		if k == 1 {
+			newHead, newTail = cur.Next, cur
+			break
+		}
+		k--
 	}
-	nodes[n-1].Next = nodes[0]
-	nodes[n-k-1].Next = nil
-	return nodes[n-k]
+ 
+	tail.Next = head
+	newTail.Next = nil
+	return newHead
 }
+
+// @lc code=end

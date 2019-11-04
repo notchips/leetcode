@@ -3,17 +3,24 @@
  *
  * [66] Plus One
  */
+package leetcode
+
+// @lc code=start
 func plusOne(digits []int) []int {
 	n, carry := len(digits), 0
 	for i := n - 1; i >= 0; i-- {
+		var sum int
 		if i == n-1 {
-			digits[i], carry = (digits[i]+1)%10, (digits[i]+1)/10
+			sum = digits[i] + 1
 		} else {
-			digits[i], carry = (digits[i]+carry)%10, (digits[i]+carry)/10
+			sum = digits[i] + carry
 		}
+		digits[i], carry = sum%10, sum/10
 	}
-	if carry > 0 {
-		return append([]int{carry}, digits...)
+	if carry == 0 {
+		return digits
 	}
-	return digits
+	return append([]int{1}, digits...)
 }
+
+// @lc code=end

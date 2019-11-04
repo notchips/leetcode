@@ -3,73 +3,82 @@
  *
  * [68] Text Justification
  */
+package leetcode
+
+// @lc code=start
 func fullJustify(words []string, maxWidth int) []string {
-	text := make([]string, 0, 8)
+	var text []string
 	for len(words) > 0 {
-		oneLineWords := pickOneLineWords(words, maxWidth)
-		words = words[len(oneLineWords):]
-		spaces := getSpaceCntAfterEachWord(oneLineWords, maxWidth, len(words) == 0)
-		text = append(text, formOneLine(oneLineWords, maxWidth, spaces))
+		picked := pickOneLineWords(words, maxWidth)
+		words = words[len(picked):]
+		spaceCnt := getSpaceCntAfterEachWord(picked, maxWidth, len(words) == 0)
+		sentence := buildSentence(picked, spaceCnt, maxWidth)
+		text = append(text, sentence)
 	}
 	return text
 }
 
 func pickOneLineWords(words []string, maxWidth int) []string {
-	cnt := 0
-	maxWidth++
-	for _, word := range words {
-		if len(word)+1 <= maxWidth {
-			cnt++
-			maxWidth -= len(word) + 1
-		} else {
-			break
-		}
+	remainWidth := maxWidth
+	pos := 0
+	for pos < len(words) && len(words[pos]) <= remainWidth {
+		remainWidth -= len(words[pos])
+		pos++
+		remainWidth--
 	}
-	return words[:cnt]
+	return words[:pos]
 }
 
-func formOneLine(words []string, maxWidth int, spaces []int) string {
-	buf := getAllSpaceByteSlice(maxWidth)
-	start := 0
+func getSpaceCntAfterEachWord(words []string, maxWidth int, isLastLine bool) []int {
+	remainWidth := maxWidth
+	for _, word := range words {
+		remainWidth -= len(word)
+	}
+
+	n := len(words)
+	var spaceCnt []int
+	if n == 1 || isLastLine {
+		spaceCnt = make([]int, n)
+		for i := range spaceCnt {
+			if i < n-1 {
+				spaceCnt[i] = 1
+				remainWidth--
+			} else {
+				spaceCnt[i] = remainWidth
+			}
+		}
+	} else {
+		spaceCnt = make([]int, n-1)
+		avg := remainWidth / (n - 1)
+		extra := remainWidth % (n - 1)
+		for i := range spaceCnt {
+			spaceCnt[i] = avg
+			if i < extra {
+				spaceCnt[i]++
+			}
+		}
+	}
+
+	return spaceCnt
+}
+
+func buildSentence(words []string, spaceCnt []int, maxWidth int) string {
+	buf := make([]byte, 0, maxWidth)
 	for i, word := range words {
-		copy(buf[start:], word)
-		start += len(word) + spaces[i]
+		buf = append(buf, word...)
+		if i < len(spaceCnt) {
+			buf = append(buf, getSpaces(spaceCnt[i])...)
+		}
 	}
 	return string(buf)
 }
 
-func getSpaceCntAfterEachWord(words []string, maxWidth int, isLastLine bool) []int {
-	totalSpaceCnt := maxWidth
-	for _, word := range words {
-		totalSpaceCnt -= len(word)
-	}
-	n := len(words)
-	if n == 1 {
-		return []int{totalSpaceCnt}
-	}
-	spaces := make([]int, n)
-	if isLastLine {
-		for i := 0; i < n-1; i++ {
-			spaces[i] = 1
-		}
-		spaces[n-1] = totalSpaceCnt - n + 1
-	} else {
-		averageSpaceCnt := totalSpaceCnt / (n - 1)
-		extraSpaceCnt := totalSpaceCnt - averageSpaceCnt*(n-1)
-		for i := 0; i < n-1; i++ {
-			spaces[i] = averageSpaceCnt
-			if i < extraSpaceCnt {
-				spaces[i]++
-			}
-		}
+func getSpaces(n int) []byte {
+	spaces := make([]byte, n)
+	for i := range spaces {
+		spaces[i] = ' '
 	}
 	return spaces
 }
 
-func getAllSpaceByteSlice(maxWidth int) []byte {
-	buf := make([]byte, maxWidth)
-	for i := range buf {
-		buf[i] = ' '
-	}
-	return buf
-}
+// @lc code=end

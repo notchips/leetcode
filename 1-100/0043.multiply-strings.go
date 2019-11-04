@@ -51,11 +51,11 @@ func add(num1, num2 []byte) []byte {
 }
 
 func byteToInt(c byte) int {
-	return int(c - '0')
+	return int(c) - '0'
 }
 
 func intToByte(i int) byte {
-	return byte(i + '0')
+	return byte(i) + '0'
 }
 
 func removeLeadingZero(num []byte) []byte {

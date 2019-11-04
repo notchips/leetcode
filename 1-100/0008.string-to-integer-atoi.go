@@ -46,7 +46,7 @@ func myAtoi(str string) int {
 }
 
 func byteToInt(c byte, neg bool) int {
-	i := int(c - '0')
+	i := int(c) - '0'
 	if neg {
 		return -i
 	}

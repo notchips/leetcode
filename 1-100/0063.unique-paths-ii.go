@@ -3,26 +3,30 @@
  *
  * [63] Unique Paths II
  */
+package leetcode
+
+// @lc code=start
 func uniquePathsWithObstacles(obstacleGrid [][]int) int {
-	m, n := len(obstacleGrid), len(obstacleGrid[0])
-	dp := make([][]int, m)
-	for i := range dp {
-		dp[i] = make([]int, n)
+	if len(obstacleGrid) == 0 || len(obstacleGrid[0]) == 0 {
+		return 0
 	}
+	m, n := len(obstacleGrid), len(obstacleGrid[0])
 	for i := 0; i < m; i++ {
-		for j := 0; j < n; j++{
-			if obstacleGrid[i][j] == 0 {
-				if i == 0 && j == 0 {
-					dp[i][j] = 1
-				} else if i == 0 {
-					dp[i][j] = dp[i][j-1]
-				} else if j == 0 {
-					dp[i][j] = dp[i-1][j]
-				} else {
-					dp[i][j] = dp[i-1][j] + dp[i][j-1]
-				}
+		for j := 0; j < n; j++ {
+			if obstacleGrid[i][j] == 1 {
+				obstacleGrid[i][j] = 0
+			} else if i == 0 && j == 0 {
+				obstacleGrid[i][j] = 1
+			} else if i == 0 {
+				obstacleGrid[i][j] = obstacleGrid[i][j-1]
+			} else if j == 0 {
+				obstacleGrid[i][j] = obstacleGrid[i-1][j]
+			} else {
+				obstacleGrid[i][j] = obstacleGrid[i-1][j] + obstacleGrid[i][j-1]
 			}
 		}
 	}
-	return dp[m-1][n-1]
+	return obstacleGrid[m-1][n-1]
 }
+
+// @lc code=end

@@ -3,7 +3,11 @@
  *
  * [65] Valid Number
  */
+package leetcode
 
+import "strings"
+
+// @lc code=start
 // var reg = regexp.MustCompile(`^[\s]*[-+]?(([\d]+([.][\d]*)?)|([.][\d]+))([eE][-+]?[\d]+)?[\s]*$`)
 
 // func isNumber(s string) bool {
@@ -12,18 +16,12 @@
 
 func isNumber(s string) bool {
 	s = strings.TrimSpace(s)
-	return isInteger(s) || isDecimal(s) || isScientific(s)
-}
-
-func removeSign(s string) string {
-	if len(s) > 0 && (s[0] == '+' || s[0] == '-') {
-		return s[1:]
-	}
-	return s
+	return isInteger(s) || isDecimal(s) || isScientificNumber(s)
 }
 
 func isInteger(s string) bool {
-	return isUnsignedInteger(removeSign(s))
+	s = removeSign(s)
+	return isUnsignedInteger(s)
 }
 
 func isUnsignedInteger(s string) bool {
@@ -44,12 +42,12 @@ func isDecimal(s string) bool {
 	if len(nums) != 2 {
 		return false
 	}
-	return (isEmpty(nums[0]) && isUnsignedInteger(nums[1])) ||
-		(isUnsignedInteger(nums[0]) && isEmpty(nums[1])) ||
+	return (len(nums[0]) == 0 && isUnsignedInteger(nums[1])) ||
+		(isUnsignedInteger(nums[0]) && len(nums[1]) == 0) ||
 		(isUnsignedInteger(nums[0]) && isUnsignedInteger(nums[1]))
 }
 
-func isScientific(s string) bool {
+func isScientificNumber(s string) bool {
 	nums := strings.Split(s, "e")
 	if len(nums) != 2 {
 		return false
@@ -57,6 +55,11 @@ func isScientific(s string) bool {
 	return (isInteger(nums[0]) || isDecimal(nums[0])) && isInteger(nums[1])
 }
 
-func isEmpty(s string) bool {
-	return len(s) == 0
+func removeSign(s string) string {
+	if len(s) > 0 && (s[0] == '+' || s[0] == '-') {
+		return s[1:]
+	}
+	return s
 }
+
+// @lc code=end

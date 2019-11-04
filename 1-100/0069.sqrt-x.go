@@ -3,10 +3,13 @@
  *
  * [69] Sqrt(x)
  */
+package leetcode
+
+// @lc code=start
 func mySqrt(x int) int {
 	left, right := 0, x
 	for left < right {
-		mid := left + (right-left)/2 + 1
+		mid := (left+right)/2 + 1
 		if mid*mid > x {
 			right = mid - 1
 		} else {
@@ -15,3 +18,5 @@ func mySqrt(x int) int {
 	}
 	return left
 }
+
+// @lc code=end
